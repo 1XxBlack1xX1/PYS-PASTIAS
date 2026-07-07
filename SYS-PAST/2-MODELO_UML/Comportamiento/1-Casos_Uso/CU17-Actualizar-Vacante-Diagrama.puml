@@ -1,0 +1,57 @@
+@startuml
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+skinparam backgroundcolor #FAFAFA
+
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    BorderThickness 1.5
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+actor "Empresa" as Emp
+actor "Base de Datos de Pasantes" as BD <<Sistema>>
+
+rectangle "SYS PASANTIAS — VACANTES" {
+    usecase "CU-17\nActualizar vacante" as CU17
+    usecase "Desplegar especificaciones\neditables de la postulación" as Act1 <<system_action>>
+}
+
+Emp --> CU17 : Modifica perfil de vacante abierta
+CU17 ..> Act1 : «include»
+CU17 --> BD : Reescribe datos de la vacante
+
+note right of CU17
+  📌 **Precondición:**
+  • La vacante debe pertenecer a la empresa y estar abierta.
+  
+  ✅ **Postcondición:**
+  • Los requisitos u oferta de la vacante se modifican.
+end note
+@endum

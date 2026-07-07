@@ -1,0 +1,28 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+actor :Director: as Dir
+actor :Base de Datos de Pasantías: as DB <<Sistema>>
+
+rectangle "SYS PASANTIAS" {
+    usecase "CU05\nRecepción de convenios de empresas" as CU05
+    usecase "Solicitar datos y vigencia" as RequestData
+    usecase "Asociar convenio a empresa" as AssociateCompany
+    
+    Dir --> CU05 : Accede
+    CU05 --> DB : Accede
+    
+    CU05 .> RequestData : <<include>>
+    CU05 .> AssociateCompany : <<include>>
+}
+
+note right of CU05
+  **Precondiciones:**
+  * El director debe estar autenticado.
+  * La empresa debe estar registrada en el sistema.
+  
+  **Postcondiciones:**
+  * El convenio queda registrado y disponible para la asignación de vacantes.
+end note
+@enduml

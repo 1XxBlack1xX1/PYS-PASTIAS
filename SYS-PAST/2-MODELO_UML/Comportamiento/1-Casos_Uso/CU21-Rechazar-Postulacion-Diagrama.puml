@@ -1,0 +1,57 @@
+@startuml
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+skinparam backgroundcolor #FAFAFA
+
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    BorderThickness 1.5
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+actor "Empresa" as Emp
+actor "Base de Datos de Pasantes" as BD <<Sistema>>
+
+rectangle "SYS PASANTIAS — POSTULACIONES" {
+    usecase "CU-21\nRechazar postulación" as CU21
+    usecase "Despachar alerta automática con\nel motivo de descarte" as Act1 <<system_action>>
+}
+
+Emp --> CU21 : Declina expediente de postulante
+CU21 ..> Act1 : «include»
+CU21 --> BD : Actualiza estatus de solicitud a 'Rechazada'
+
+note right of CU21
+  📌 **Precondición:**
+  • Debe existir una postulación activa.
+  
+  ✅ **Postcondición:**
+  • La postulación queda cerrada como no seleccionada.
+end note
+@endum

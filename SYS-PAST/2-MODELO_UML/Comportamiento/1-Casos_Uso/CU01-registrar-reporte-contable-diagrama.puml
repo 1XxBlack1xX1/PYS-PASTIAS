@@ -1,0 +1,18 @@
+@startuml
+skinparam packageStyle rectangle
+
+actor "Estudiante Contable" as est
+
+rectangle "SYS PASANTIAS" {
+    usecase "Validar formato\ny tamaño de archivo" as uc_validar
+    usecase "Almacenar en\nexpediente digital" as uc_guardar
+    usecase "CU01\nRegistrar reporte contable" as uc_main
+    usecase "Mostrar error\nde archivo inválido" as uc_error
+}
+
+est --> uc_main : Accede
+
+uc_main .up.> uc_validar : <<include>>
+uc_main .up.> uc_guardar : <<include>>
+uc_error .up.> uc_main : <<extend>>
+@endum

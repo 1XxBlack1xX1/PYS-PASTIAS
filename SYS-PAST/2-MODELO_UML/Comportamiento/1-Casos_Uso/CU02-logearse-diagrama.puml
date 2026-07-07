@@ -1,0 +1,38 @@
+@startuml
+' Configuración de colores estilo docente
+skinparam usecase {
+    BackgroundColor #1FA1F1
+    BorderColor #1FA1F1
+    FontColor white
+    FontSize 14
+}
+skinparam actor {
+    BorderColor #1FA1F1
+    FontColor #2E4D68
+    BackgroundColor white
+}
+skinparam ArrowColor #1FA1F1
+skinparam package {
+    BorderColor #1FA1F1
+    FontColor #1FA1F1
+}
+
+actor "Administrador" as admin
+actor "Director" as dir
+actor "Estudiante Contable" as est
+
+rectangle "SYS PASANTIAS" {
+    usecase "🔐\nValidar\ncredenciales" as uc_validar
+    usecase "🎟️\nGenerar\nToken JWT" as uc_jwt
+    usecase "<b>CU02</b>\nLogearse" as uc_main
+    usecase "⚠️\nMostrar\nMensaje de error" as uc_error
+}
+
+admin -[#1FA1F1]-> uc_main : Accede
+dir -[#1FA1F1]-> uc_main : Accede
+est -[#1FA1F1]-> uc_main : Accede
+
+uc_main .up.> uc_validar : <<include>>
+uc_main .up.> uc_jwt : <<include>>
+uc_error .down.> uc_main : <<extend>>
+@endum

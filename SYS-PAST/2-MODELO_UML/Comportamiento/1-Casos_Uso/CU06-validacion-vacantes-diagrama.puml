@@ -1,0 +1,80 @@
+@startuml
+' Configuración de colores y estilo profesional (Estilo moderno y coloreado)
+skinparam backgroundcolor #FFFFFF
+skinparam roundcorner 10
+skinparam actorStyle awesome
+
+skinparam rectangle {
+    BackgroundColor #F4F7F6
+    BorderColor #1A5276
+    FontColor #2C3E50
+    FontSize 14
+}
+
+skinparam usecase {
+    BackgroundColor #3498DB
+    BorderColor #2980B9
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    ' Estilo para los casos de uso secundarios incluidos
+    BackgroundColor<<include>> #5DADE2
+    BorderColor<<include>> #2980B9
+    FontColor<<include>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #E67E22
+    BorderColor #D35400
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+skinparam note {
+    BackgroundColor #FCF3CF
+    BorderColor #F39C12
+    FontColor #34495E
+    FontSize 11
+}
+
+skinparam arrow {
+    Color #2E4053
+    FontColor #1F618D
+    FontSize 11
+}
+
+left to right direction
+
+' Definición de Actores
+actor :Director: as Dir
+actor :Estudiante: as Student
+actor :Base de Datos de Pasantías: as DB <<Sistema>>
+
+rectangle "SYS PASANTIAS — VALIDACIÓN" {
+    usecase "CU-06\nValidación de vacantes\npor empresa" as CU06
+    usecase "Verificar límite de cupos" as VerifyCups <<include>>
+    usecase "Mostrar vacantes disponibles" as ShowVacancies <<include>>
+    
+    ' Interacciones
+    Dir --> CU06 : Consulta
+    Student --> CU06 : Consulta
+    CU06 --> DB : Verifica en
+    
+    ' Relaciones de Inclusión
+    CU06 .> VerifyCups : <<include>>
+    CU06 .> ShowVacancies : <<include>>
+}
+
+' Notas de Precondición y Postcondición con color destacado
+note right of CU06
+  <color:#D35400><b>📌 Precondición:</b></color>
+  • La empresa debe tener un convenio activo.
+  
+  <color:#1E8449><b>✅ Postcondición:</b></color>
+  • Se confirma la disponibilidad de plazas 
+    para el proceso de postulación.
+end note
+
+@enduml

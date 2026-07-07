@@ -1,0 +1,59 @@
+@startuml
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+skinparam backgroundcolor #FAFAFA
+
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    BorderThickness 1.5
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+actor "Empresa" as Emp
+actor "Base de Datos de Pasantes" as BD <<Sistema>>
+
+rectangle "SYS PASANTIAS — VACANTES" {
+    usecase "CU-16\nRegistrar vacante" as CU16
+    usecase "Verificar estatus activo\ndel convenio de la empresa" as Act1 <<system_action>>
+    usecase "Asignar estado inicial como\n'Pendiente de aprobación'" as Act2 <<system_action>>
+}
+
+Emp --> CU16 : Publica requerimientos de pasantía
+CU16 ..> Act1 : «include»
+CU16 ..> Act2 : «include»
+CU16 --> BD : Archiva oferta laboral transitoria
+
+note right of CU16
+  📌 **Precondición:**
+  • La empresa debe tener un convenio vigente activo.
+  
+  ✅ **Postcondición:**
+  • La vacante queda registrada a la espera de ser publicada.
+end note
+@endum

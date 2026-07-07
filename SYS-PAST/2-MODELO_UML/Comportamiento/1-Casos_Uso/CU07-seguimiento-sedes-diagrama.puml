@@ -1,0 +1,93 @@
+@startuml
+' Habilitar sombras y bordes redondeados pronunciados para efecto de relieve / profundidad
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+
+' Fondo general limpio
+skinparam backgroundcolor #FAFAFA
+
+' Estilo del Contenedor del Sistema con efecto de profundidad (Bordes gruesos y degradados)
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+' Estilo de Casos de Uso con degradado tridimensional (Gradients)
+skinparam usecase {
+    ' Degradado de azul oscuro a azul brillante para simular volumen 3D
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    ' Sub-procesos con degradado aguamarina/esmeralda
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+' Estilo de Actores con degradado cálido
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    FontColor #2E4053
+    FontSize 12
+    FontStyle bold
+}
+
+' Estilo de Notas (Estilo Post-it con sombra)
+skinparam note {
+    BackgroundColor #F9E79F-#F4D03F
+    BorderColor #D4AC0D
+    FontColor #2C3E50
+    FontSize 11
+}
+
+' Estilo de las Líneas de Conexión
+skinparam arrow {
+    Color #34495E
+    FontColor #2C3E50
+    FontSize 11
+    Thickness 1.5
+}
+
+left to right direction
+
+' Definición de Actores
+actor :Director: as Dir
+actor :Base de Datos de Pasantías: as DB <<Sistema>>
+
+rectangle "SYS PASANTIAS — REPORTES" {
+    usecase "CU-07\nSeguimiento en\nmúltiples sedes" as CU07
+    
+    ' Acciones internas del sistema extraídas del flujo principal
+    usecase "Filtrar por sede y sucursal" as FilterSedes <<system_action>>
+    usecase "Desplegar avance y asistencia" as DisplayMetrics <<system_action>>
+    
+    ' Flujo de relaciones
+    Dir --> CU07 : Selecciona reporte
+    CU07 --> DB : Consulta datos en
+    
+    CU07 .> FilterSedes : <<include>>
+    CU07 .> DisplayMetrics : <<include>>
+}
+
+' Nota tridimensional para Precondición y Postcondición
+note right of CU07
+  <color:#A04000><b>📌 Precondición:</b></color>
+  • El estudiante debe tener una pasantía
+    asignada e iniciada.
+  
+  <color:#0E6251><b>✅ Postcondición:</b></color>
+  • Se visualiza el estado consolidado
+    de las pasantías multisede.
+end note
+
+@enduml

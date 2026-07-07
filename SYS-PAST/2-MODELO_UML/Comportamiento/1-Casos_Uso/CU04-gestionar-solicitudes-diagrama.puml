@@ -1,0 +1,30 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+actor :Estudiante: as Student
+actor :Base de Datos de Pasantías: as DB <<Sistema>>
+
+rectangle "SYS PASANTIAS" {
+    usecase "CU01\nGestionar solicitudes de pasantías" as CU01
+    usecase "Validar datos obligatorios" as Validate
+    usecase "Mostrar error de validación" as ValidationError
+    usecase "Registrar solicitud (Pendiente)" as Register
+    
+    Student --> CU01 : Accede
+    CU01 --> DB : Accede
+    
+    CU01 .> Validate : <<include>>
+    CU01 .> Register : <<include>>
+    Validate <. ValidationError : <<extend>>
+}
+
+note right of CU01
+  **Precondiciones:**
+  * El estudiante debe estar registrado y autenticado.
+  * El perfil académico debe estar activo.
+  
+  **Postcondiciones:**
+  * La solicitud de pasantía se almacena correctamente en el sistema.
+end note
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+skinparam backgroundcolor #FAFAFA
+
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    BorderThickness 1.5
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+actor "Director" as Dir
+actor "Administrador" as Admin
+actor "Base de Datos de Pasantes" as BD <<Sistema>>
+
+rectangle "SYS PASANTIAS — CIERRE" {
+    usecase "CU-27\nEmitir constancia" as CU27
+    usecase "Validar requerimientos mínimos\ne incrustar firma QR digital" as Act1 <<system_action>>
+}
+
+Dir --> CU27 : Autoriza egreso de pasantía
+Admin --> CU27 : Modula expedientes aptos
+CU27 ..> Act1 : «include»
+CU27 --> BD : Libera constancia oficial descargable
+
+note right of CU27
+  📌 **Precondición:**
+  • El estudiante debe haber cumplido con las horas requeridas y tener aprobadas las evaluaciones.
+  
+  ✅ **Postcondición:**
+  • La constancia de pasantía es emitida y puesta a disposición.
+end note
+@endum

@@ -1,0 +1,63 @@
+@startuml
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+skinparam backgroundcolor #FAFAFA
+
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    BorderThickness 1.5
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+actor "Director" as Dir
+actor "Administrador" as Admin
+actor "Supervisor" as Sup
+actor "Base de Datos de Pasantes" as BD <<Sistema>>
+
+rectangle "SYS PASANTIAS — ESTUDIANTES" {
+    usecase "CU-13\nConsultar estudiante" as CU13
+    usecase "Filtrar coincidencias por\ncódigo o apellidos" as Act1 <<system_action>>
+    usecase "Desplegar expediente y\nestado de pasantías" as Act2 <<system_action>>
+}
+
+Dir --> CU13 : Consulta historial académico
+Admin --> CU13 : Busca expediente completo
+Sup --> CU13 : Revisa alumnos a cargo
+CU13 ..> Act1 : «include»
+CU13 ..> Act2 : «include»
+CU13 --> BD : Extrae datos estructurados
+
+note right of CU13
+  📌 **Precondición:**
+  • El estudiante debe existir en el sistema.
+  
+  ✅ **Postcondición:**
+  • Se visualiza la información detallada del estudiante.
+end note
+@endum

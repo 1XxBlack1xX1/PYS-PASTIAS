@@ -1,0 +1,61 @@
+@startuml
+skinparam shadowing true
+skinparam roundcorner 15
+skinparam actorStyle awesome
+skinparam backgroundcolor #FAFAFA
+
+skinparam rectangle {
+    BackgroundColor #F2F4F4-#E5E8E8
+    BorderColor #2C3E50
+    BorderThickness 2
+    FontColor #2C3E50
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #2980B9-#5DADE2
+    BorderColor #1B4F72
+    BorderThickness 1.5
+    FontColor #FFFFFF
+    FontSize 12
+    FontStyle bold
+    
+    BackgroundColor<<system_action>> #117864-#1ABC9C
+    BorderColor<<system_action>> #0E6251
+    FontColor<<system_action>> #FFFFFF
+}
+
+skinparam actor {
+    BackgroundColor #D35400-#E67E22
+    BorderColor #A04000
+    BorderThickness 1.5
+    FontColor #2C3E50
+    FontSize 12
+    FontStyle bold
+}
+
+actor "Empresa" as Emp
+actor "Director" as Dir
+actor "Base de Datos de Pasantes" as BD <<Sistema>>
+
+rectangle "SYS PASANTIAS — POSTULACIONES" {
+    usecase "CU-20\nAprobar postulación" as CU20
+    usecase "Notificar preselección interna\ny generar flujo de visado" as Act1 <<system_action>>
+    usecase "Asignar estado final 'Aprobada'" as Act2 <<system_action>>
+}
+
+Emp --> CU20 : Acepta propuesta de pasante
+Dir --> CU20 : Valida y otorga firma final institucional
+CU20 ..> Act1 : «include»
+CU20 ..> Act2 : «include»
+CU20 --> BD : Convierte postulación en pasantía formal
+
+note right of CU20
+  📌 **Precondición:**
+  • Debe existir una postulación activa por parte del estudiante.
+  
+  ✅ **Postcondición:**
+  • El estudiante es seleccionado formalmente para ocupar la vacante.
+end note
+@endum
