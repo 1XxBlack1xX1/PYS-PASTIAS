@@ -1,0 +1,10 @@
+@startuml CU08_Estado_Registrar_Empresa
+[*] --> FormularioEmpresaVacio
+
+FormularioEmpresaVacio --> ValidandoRUC : Enviar formulario
+ValidandoRUC --> RUCDuplicado : Ya existe en el sistema
+RUCDuplicado --> FormularioEmpresaVacio : Modificar datos
+
+ValidandoRUC --> EmpresaRegistradaInactiva : RUC válido (Falta validar cuenta)
+EmpresaRegistradaInactiva --> [*]
+@enduml

@@ -1,0 +1,10 @@
+@startuml CU06_Estado_Validacion_Vacantes
+[*] --> VacantePendiente
+
+VacantePendiente --> EvaluandoRequisitos : Coordinador abre vacante
+EvaluandoRequisitos --> VacanteRechazada : No cumple directrices
+EvaluandoRequisitos --> VacanteValidada : Todo conforme
+
+VacanteRechazada --> [*]
+VacanteValidada --> [*]
+@enduml

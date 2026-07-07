@@ -1,0 +1,9 @@
+@startuml CU10_Estado_Eliminar_Empresa
+[*] --> EmpresaActiva
+
+EmpresaActiva --> EsperandoConfirmacion : Clic en "Eliminar"
+EsperandoConfirmacion --> EmpresaActiva : Cancelar
+EsperandoConfirmacion --> ProcesandoBaja : Confirmar eliminación
+ProcesandoBaja --> EmpresaEliminadaLogicamente : Atributo 'activo' = false
+EmpresaEliminadaLogicamente --> [*]
+@enduml

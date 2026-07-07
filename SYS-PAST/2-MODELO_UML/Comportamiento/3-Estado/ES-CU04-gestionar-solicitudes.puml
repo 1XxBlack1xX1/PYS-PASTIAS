@@ -1,0 +1,12 @@
+@startuml CU04_Estado_Gestionar_Solicitudes
+[*] --> SolicitudRecibida
+
+SolicitudRecibida --> EnRevision : Asignar a Coordinador
+EnRevision --> SolicitudAprobada : Cumple requisitos
+EnRevision --> SolicitudRechazada : No cumple requisitos
+EnRevision --> Observada : Requiere correcciones
+
+Observada --> EnRevision : Usuario corrige y reenvía
+SolicitudAprobada --> [*]
+SolicitudRechazada --> [*]
+@enduml

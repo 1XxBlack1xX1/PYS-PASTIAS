@@ -1,0 +1,7 @@
+@startuml CU28_Cerrar_Proceso
+[*] --> ExpedienteActivo
+
+ExpedienteActivo --> ValidandoCierre : Clic en "Cerrar Proceso"
+ValidandoCierre --> ExpedienteArchivadoConcluido : Cambiar estado del proceso a finalizado
+ExpedienteArchivadoConcluido --> [*] : Deshabilitar modificaciones futuras
+@enduml

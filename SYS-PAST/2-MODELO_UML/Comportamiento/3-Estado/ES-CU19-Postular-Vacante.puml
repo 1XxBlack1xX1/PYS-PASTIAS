@@ -1,0 +1,9 @@
+@startuml CU19_Estado_Postular_Vacante
+[*] --> RevisandoVacante
+
+RevisandoVacante --> VerificandoRequisitosEstudiante : Clic en "Postular"
+VerificandoRequisitosEstudiante --> NoApto : No cumple ciclo/promedio mínimo
+VerificandoRequisitosEstudiante --> PostulacionRegistradaPendiente : Cumple perfil
+NoApto --> [*]
+PostulacionRegistradaPendiente --> [*]
+@enduml

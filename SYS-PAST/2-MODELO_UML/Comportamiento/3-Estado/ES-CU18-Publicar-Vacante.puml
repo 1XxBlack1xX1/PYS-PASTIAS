@@ -1,0 +1,7 @@
+@startuml CU18_Estado_Publicar_Vacante
+[*] --> VacanteValidadaOculta
+
+VacanteValidadaOculta --> Publicando : Coordinador aprueba visibilidad
+Publicando --> VacantePublicadaVisibles : Estado cambiado a 'Bolsa de Trabajo'
+VacantePublicadaVisibles --> [*]
+@enduml

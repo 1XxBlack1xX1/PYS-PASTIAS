@@ -1,0 +1,9 @@
+@startuml CU07_Estado_Seguimiento_Sedes
+[*] --> SedeSeleccionada
+
+SedeSeleccionada --> RecopilandoActividades : Cargar datos de sede
+RecopilandoActividades --> CalculandoMetricas : Procesar historial
+CalculandoMetricas --> PanelSeguimientoMostrado : Renderizar gráficos e indicadores
+PanelSeguimientoMostrado --> RecopilandoActividades : Actualizar datos manualmente
+PanelSeguimientoMostrado --> [*]
+@enduml

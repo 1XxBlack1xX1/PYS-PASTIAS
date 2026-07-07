@@ -1,0 +1,8 @@
+@startuml CU26_Estado_Evaluar_Desempeno
+[*] --> FichaEvaluacionVacia
+
+FichaEvaluacionVacia --> CalificandoCriterios : Llenar rúbricas numéricas
+CalificandoCriterios --> ProcesandoPromedio : Enviar respuestas
+ProcesandoPromedio --> EvaluacionFinalizadaGuardada : Nota calculada y bloqueada
+EvaluacionFinalizadaGuardada --> [*]
+@enduml

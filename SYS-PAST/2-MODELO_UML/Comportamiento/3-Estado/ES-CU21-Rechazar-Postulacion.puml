@@ -1,0 +1,8 @@
+@startuml CU21_Estado_Rechazar_Postulacion
+[*] --> PostulacionPendiente
+
+PostulacionPendiente --> EvaluandoCandidato : Empresa revisa CV
+EvaluandoCandidato --> IngresandoMotivoRechazo : Clic en "Rechazar"
+IngresandoMotivoRechazo --> PostulacionRechazada : Guardar observaciones
+PostulacionRechazada --> [*]
+@enduml
