@@ -5,7 +5,7 @@ left to right direction
 actor :Estudiante: as Student
 actor :Base de Datos de Pasantías: as DB <<Sistema>>
 
-rectangle "SYS PASANTIAS" {
+rectangle "GESTIONAR SOLICITUDES" {
     usecase "CU01\nGestionar solicitudes de pasantías" as CU01
     usecase "Validar datos obligatorios" as Validate
     usecase "Mostrar error de validación" as ValidationError
