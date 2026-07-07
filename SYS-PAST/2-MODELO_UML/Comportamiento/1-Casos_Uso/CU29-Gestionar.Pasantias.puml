@@ -55,8 +55,10 @@ rectangle "Sistema de Gestión de Pasantías (SIGEP)" {
         usecase "CU06: Validación de Vacantes" as CU06
         usecase "CU16: Registrar Vacante" as CU16
         usecase "CU17: Actualizar Vacante" as CU17
+
         usecase "CU18: Publicar Vacante" as CU18
     }
+
 
     ' Módulo 6: Postulaciones y Seguimiento Académico
     package "Módulo de Postulaciones y Seguimiento" {
