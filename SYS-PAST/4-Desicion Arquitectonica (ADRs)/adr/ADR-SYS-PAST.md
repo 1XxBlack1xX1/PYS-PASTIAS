@@ -1,46 +1,40 @@
-# ESPECIFICACIÓN DE CASO DE USO: CU01 - Registrar reporte contable
+# ADR 002: Uso de Arquitectura Hexagonal en Microservicios para el Sistema de Administración de Pasantías
 
-## 1. Descripción
-El sistema permite al Estudiante Contable subir y registrar su reporte de pasantías en el expediente digital. El sistema valida de forma automática que el formato y tamaño del archivo cumplan con los requisitos establecidos antes de almacenarlo.
+## Estado
+Aceptado
+
+## Fecha
+2026-07-07
 
 ## Contexto
-El **Sistema de Administración de Pasantías** requiere gestionar los ciclos de vida de las prácticas preprofesionales de los estudiantes. Esto involucra la interacción de múltiples actores con necesidades cambiantes: la institución académica (coordinadores y tutores), los estudiantes y las organizaciones/empresas externas. Para simplificar el despliegue, la infraestructura y el desarrollo inicial, el sistema se ha diseñado bajo una arquitectura de **Monolito** único.
+El **Sistema de Administración de Pasantías** requiere gestionar de manera altamente escalable y segura los ciclos de vida de las prácticas preprofesionales de los estudiantes. Esto involucra la interacción de múltiples actores con necesidades cambiantes: la institución académica (coordinadores y tutores), los estudiantes y las organizaciones/empresas externas. Debido a la naturaleza del sistema, se ha dividido en un ecosistema de **Microservicios** independientes (por ejemplo: Microservicio de Estudiantes, Microservicio de Empresas y Convenios, Microservicio de Evaluaciones y Reportes).
 
-Sin embargo, las reglas académicas y los procesos de validación de las pasantías (cómputo de horas, aprobación de planes de trabajo, estados de convenios) son altamente propensos a cambiar según las normativas institucionales. Existía el riesgo de que, al estar todo en una sola aplicación centralizada (Monolito), el código interno de los diferentes módulos (Estudiantes, Empresas, Evaluaciones) se mezclara y se volviera altamente dependiente de la infraestructura tecnológica elegida (como el framework Spring Boot, la base de datos relacional/NoSQL elegida o las librerías de interfaz de usuario). Si las reglas de negocio se acoplan directamente a los componentes de infraestructura o la base de datos, cualquier cambio regulatorio podría desestabilizar otras partes del monolito, haciendo que el mantenimiento del sistema fuera costoso, complejo y propenso a errores.
+Sin embargo, las reglas académicas y los procesos de validación de las pasantías (cómputo de horas, aprobación de planes de trabajo, estados de convenios) son altamente propensos a cambiar según las normativas institucionales. Existía el riesgo de que estas reglas de negocio centrales se acoplaran directamente a la infraestructura tecnológica (como el framework Spring Boot, bases de datos relacionales para expedientes o NoSQL para bitácoras, y protocolos de comunicación como REST o sistemas de mensajería para notificaciones). Si la tecnología de persistencia cambiaba o se requería probar las reglas de aprobación sin depender de una base de datos activa, el acoplamiento haría que la evolución del sistema fuera costosa y compleja.
 
-Se evaluó la estructura interna de la aplicación monolítica bajo dos enfoques:
-1. **Diseño tradicional en capas (Arquitectura N-Tier):** Desarrollo rápido y común en sistemas monolíticos, pero con un alto riesgo de mezclar la lógica de validación académica de pasantías con anotaciones del framework, controladores web o consultas directas a la base de datos.
-2. **Diseño de Arquitectura Hexagonal (Puertos y Adaptadores):** Desacoplamiento total del núcleo del negocio de las pasantías dentro del mismo monolito, permitiendo que las reglas de asignación, evaluación y control cambien de forma independiente a los mecanismos de almacenamiento, envío de correos o interfaces web.
+Se evaluó la estructura interna de los microservicios bajo dos enfoques:
+1. **Diseño tradicional en capas:** Desarrollo rápido, pero con un alto riesgo de mezclar la lógica de validación académica de pasantías con anotaciones del framework o consultas directas a la base de datos.
+2. **Diseño de Arquitectura Hexagonal (Puertos y Adaptadores):** Desacoplamiento total del núcleo del negocio de las pasantías, permitiendo que las reglas de asignación, evaluación y control cambien de forma independiente a los mecanismos de almacenamiento o interfaces de usuario.
 
-## 2. Actores
-* BERRIOS FLORES Abel yeins
-* BILBAO LIZARRAGA Andre Fabrizio
-* LARICO QUISPE Nelson Antony
-* QUISPE TITO Juan Daniel
+## Decisión
+Hemos decidido adoptar la **Arquitectura Hexagonal** de manera estricta para el diseño interno de **cada microservicio del Sistema de Administración de Pasantías**.
 
+La estructura interna de cada componente se dividirá de la siguiente manera:
+* **Dominio / Core (Gestión de Pasantías):** Contiene la lógica pura del negocio académico. Incluye las entidades principales (`Estudiante`, `Pasantia`, `Empresa`, `Tutor`, `Evaluacion`) y las reglas comerciales (validación de horas mínimas, verificación de vigencia de convenios, estados de aprobación de informes), totalmente aisladas de frameworks, librerías web o de persistencia.
+* **Puertos (Ports):** Interfaces que definen los contratos del sistema. Los puertos de entrada (*Inbound/Driving*) exponen los casos de uso específicos del negocio (ej. `PostularAPasantia`, `EvaluarDesempeño`, `GenerarReporteFinal`). Los puertos de salida (*Outbound/Driven*) definen los contratos necesarios para la persistencia o integraciones (ej. `PasantiaRepositoryPort`, `NotificacionServicePort`).
+* **Adaptadores (Adapters):** Implementaciones técnicas externas. 
+  * Los adaptadores de entrada (*Driving*) exponen las API REST para los portales web del estudiante y la empresa, o controladores de eventos para la recepción de solicitudes.
+  * Los adaptadores de salida (*Driven*) gestionan el acceso a las bases de datos (ej. mediante Spring Data JPA para PostgreSQL o MongoDB), el almacenamiento de archivos (ej. cartas de aceptación en PDFs) y las llamadas HTTP o colas de mensajería para notificar a los usuarios.
 
-## 3. Precondiciones
-* El estudiante debe haber iniciado sesión correctamente en el sistema (CU02).
-* El estudiante debe contar con un archivo de reporte contable listo para subir.
+## Consecuencias
 
-## 4. Flujo Principal (Flujo Básico)
-1. El estudiante selecciona la opción "Registrar reporte contable".
-2. El sistema muestra un formulario con los campos para cargar el documento.
-3. El estudiante selecciona y carga su archivo desde su equipo.
-4. El estudiante hace clic en el botón "Guardar/Enviar".
-5. El sistema ejecuta la validación interna del formato y tamaño del archivo (`<<include>>`).
-6. El sistema almacena con éxito el documento en el expediente digital (`<<include>>`).
-7. El sistema muestra un mensaje de confirmación: "Reporte registrado exitosamente".
+### Positivas (Beneficios)
+* **Aislamiento de la Lógica Académica:** Los cambios en los reglamentos internos de pasantías de la institución se pueden implementar modificando únicamente el Dominio, sin alterar los controladores web ni la base de datos.
+* **Flexibilidad Tecnológica y Multi-inquilino:** Permite migrar o diversificar el almacenamiento (por ejemplo, guardar los documentos firmados en una nube o localmente) cambiando solo un adaptador de salida, manteniendo intacto el flujo de aprobación del sistema.
+* **Facilidad de Pruebas Automatizadas (Mocks):** Facilita la realización de pruebas unitarias robustas sobre los flujos críticos (como el cálculo correcto de horas acumuladas por el alumno) simulando el comportamiento de las bases de datos o servicios de autenticación mediante los puertos.
+* **Autonomía de los Microservicios:** Cada módulo del flujo de la pasantía (Postulación, Seguimiento, Certificación) evoluciona a su propio ritmo técnico.
 
-## 5. Flujos Alternativos (Flujos de Excepción)
-* **5.1. Archivo con formato o tamaño inválido (`<<extend>>`)**
-    * Si en el paso 5 del flujo principal el sistema detecta que el archivo no es un PDF válido o excede el límite de tamaño:
-    1. El sistema interrumpe el proceso de almacenamiento.
-    2. El sistema muestra el mensaje de error correspondiente: "Error: Archivo inválido. Verifique el formato y tamaño" (`<<extend>>`).
-    3. El sistema regresa al paso 2 del flujo principal para que el estudiante intente subir otro archivo.
+### Negativas (Compensaciones / Trade-offs)
+* **Duplicidad de Modelos e Incremento de Mapeadores:** Al separar estrictamente las capas, es obligatorio transformar los datos constantemente: de los DTOs de la API REST a Objetos de Dominio (`Pasantia`), y de estos a Entidades de base de datos (`PasantiaEntity`). Esto añade código repetitivo (*boilerplate*) y requiere el uso de librerías de mapeo (como MapStruct).
+* **Curva de Aprendizaje y Mayor Número de Archivos:** El equipo de desarrollo debe adaptarse a trabajar con una estructura de paquetes rigurosa por cada microservicio. Una funcionalidad simple requiere la creación de interfaces (puertos), implementaciones (adaptadores) y modelos separados, aumentando el tiempo inicial de desarrollo.
 
-## 6. Postcondiciones
-* El reporte contable queda registrado en el sistema y asociado al expediente del estudiante en estado "Enviado/Almacenado".
-
-
-
+esto cambialo todo a monolito, todo lo que diga microservicios cambialo a monolito porque estamos trabajando con monolito y no microservicios
