@@ -1,4 +1,4 @@
-# ADR 002: Uso de Arquitectura Hexagonal en Microservicios para el Sistema de Administración de Pasantías
+# ADR 001: Uso de Arquitectura Monolito para el Sistema de Administración de Pasantías
 
 ## Estado
 Aceptado
