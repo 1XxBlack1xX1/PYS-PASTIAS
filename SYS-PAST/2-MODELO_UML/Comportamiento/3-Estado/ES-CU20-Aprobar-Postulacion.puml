@@ -1,0 +1,7 @@
+@startuml CU20_Estado_Aprobar_Postulacion
+[*] --> PostulacionPendiente
+
+PostulacionPendiente --> EvaluandoCandidato : Empresa revisa CV
+EvaluandoCandidato --> PostulacionAprobada : Clic en "Aprobar/Seleccionar"
+PostulacionAprobada --> [*]
+@enduml

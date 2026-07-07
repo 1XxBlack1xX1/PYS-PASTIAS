@@ -1,0 +1,9 @@
+@startuml CU12_Estado_Actualizar_Estudiante
+[*] --> DatosEstudianteVigentes
+
+DatosEstudianteVigentes --> ModoEdicion : Abrir formulario de actualización
+ModoEdicion --> ValidandoNuevosDatos : Guardar
+ValidandoNuevosDatos --> ModoEdicion : Error en campos
+ValidandoNuevosDatos --> DatosEstudianteActualizados : Éxito en persistencia
+DatosEstudianteActualizados --> [*]
+@enduml

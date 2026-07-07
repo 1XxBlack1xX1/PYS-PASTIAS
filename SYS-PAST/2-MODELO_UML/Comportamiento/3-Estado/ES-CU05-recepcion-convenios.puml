@@ -1,0 +1,10 @@
+@startuml CU05_Estado_Recepcion_Convenios
+[*] --> DocumentoRecibido
+
+DocumentoRecibido --> ValidandoFormatos : Cargar al sistema
+ValidandoFormatos --> ErrorArchivo : Corrupto o formato inválido
+ErrorArchivo --> DocumentoRecibido : Re-subir archivo
+
+ValidandoFormatos --> ConvenioRegistradoPendiente : Metadatos correctos
+ConvenioRegistradoPendiente --> [*]
+@enduml

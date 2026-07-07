@@ -1,0 +1,9 @@
+@startuml CU14_Estado_Registrar_Convenio
+[*] --> BorradorConvenio
+
+BorradorConvenio --> RevisandoClausulas : Enviar a revisión legal
+RevisandoClausulas --> Rechazado : No aprobado por las partes
+RevisandoClausulas --> ConvenioActivo : Firmado y registrado con vigencia
+Rechazado --> [*]
+ConvenioActivo --> [*]
+@enduml

@@ -1,0 +1,8 @@
+@startuml CU24_Estado_Asignar_Supervisor
+[*] --> EstudianteSinSupervisor
+
+EstudianteSinSupervisor --> EvaluandoDocentesDisponibles : Buscar supervisor
+EvaluandoDocentesDisponibles --> VerificandoCargaAcademica : Seleccionar docente
+VerificandoCargaAcademica --> SupervisorAsignado : Confirmar vinculación
+SupervisorAsignado --> [*]
+@enduml

@@ -1,0 +1,11 @@
+@startuml CU03_Estado_Gestionar_Usuarios
+[*] --> ListadoUsuarios
+
+ListadoUsuarios --> MostrandoFormularioUsuario : Selecciona "Crear/Editar"
+MostrandoFormularioUsuario --> ProcesandoDatos : Guarda cambios
+ProcesandoDatos --> ListadoUsuarios : Éxito / Tabla actualizada
+
+ListadoUsuarios --> EsperandoConfirmacionBaja : Selecciona "Eliminar/Desactivar"
+EsperandoConfirmacionBaja --> ListadoUsuarios : Confirmado (Usuario Inactivo)
+ListadoUsuarios --> [*]
+@enduml

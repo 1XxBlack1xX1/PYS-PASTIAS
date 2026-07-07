@@ -1,0 +1,8 @@
+@startuml CU17_Estado_Actualizar_Vacante
+[*] --> VacanteEstadoOriginal
+
+VacanteEstadoOriginal --> ModificandoDetalles : Seleccionar editar
+ModificandoDetalles --> ValidandoModificaciones : Guardar cambios
+ValidandoModificaciones --> VacanteModificada : Persistencia completada
+VacanteModificada --> [*]
+@enduml

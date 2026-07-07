@@ -1,0 +1,8 @@
+@startuml CU25_Estado_Registrar_Seguimiento
+[*] --> BitacoraVacia
+
+BitacoraVacia --> RedactandoAvance : Añadir nueva entrada de seguimiento
+RedactandoAvance --> ProcesandoSeguimiento : Guardar reporte de visita
+ProcesandoSeguimiento --> SeguimientoRegistrado : Agregado al expediente del alumno
+SeguimientoRegistrado --> [*]
+@enduml

@@ -1,0 +1,8 @@
+@startuml CU15_Estado_Renovar_Convenio
+[*] --> ConvenioVencido
+
+ConvenioVencido --> DefiniendoNuevaFecha : Clic en "Renovar"
+DefiniendoNuevaFecha --> ProcesandoRenovacion : Guardar extensión
+ProcesandoRenovacion --> ConvenioRenovadoActivo : Nueva fecha registrada
+ConvenioRenovadoActivo --> [*]
+@enduml

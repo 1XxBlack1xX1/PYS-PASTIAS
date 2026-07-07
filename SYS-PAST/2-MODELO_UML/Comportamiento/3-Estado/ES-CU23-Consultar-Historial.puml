@@ -1,0 +1,8 @@
+@startuml CU23_Estado_Consultar_Historial
+[*] --> FiltrosAuditoriaVacios
+
+FiltrosAuditoriaVacios --> CargandoLogs : Aplicar rango de fechas
+CargandoLogs --> HistorialMostrado : Renderizar tabla de auditoría
+HistorialMostrado --> FiltrosAuditoriaVacios : Limpiar filtros
+HistorialMostrado --> [*]
+@enduml

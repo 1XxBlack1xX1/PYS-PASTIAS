@@ -1,0 +1,7 @@
+@startuml CU16_Estado_Registrar_Vacante
+[*] --> DetallesVacanteVacios
+
+DetallesVacanteVacios --> FormulandoVacante : Completar requerimientos
+FormulandoVacante --> VacanteRegistradaPendiente : Guardar publicación
+VacanteRegistradaPendiente --> [*]
+@enduml

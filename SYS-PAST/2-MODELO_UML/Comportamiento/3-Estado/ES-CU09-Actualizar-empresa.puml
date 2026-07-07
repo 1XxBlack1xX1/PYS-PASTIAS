@@ -1,0 +1,10 @@
+@startuml CU09_Estado_Actualizar_Empresa
+[*] --> PerfilOriginal
+
+PerfilOriginal --> EditandoCampos : Clic en "Modificar"
+EditandoCampos --> PerfilOriginal : Cancelar cambios
+EditandoCampos --> ValidandoCambios : Guardar
+ValidandoCambios --> EditandoCampos : Error de formato
+ValidandoCambios --> PerfilActualizado : Datos correctos y guardados
+PerfilActualizado --> [*]
+@enduml

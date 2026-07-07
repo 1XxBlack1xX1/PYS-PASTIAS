@@ -1,0 +1,11 @@
+@startuml CU27_Estado_Emitir_Constancia
+[*] --> VerificandoElegibilidad
+
+VerificandoElegibilidad --> NoAptoParaConstancia : Documentos o notas incompletas
+VerificandoElegibilidad --> AptoParaConstancia : Requisitos 100% cubiertos
+
+AptoParaConstancia --> GenerandoDocumentoPDF : Clic en "Emitir"
+GenerandoDocumentoPDF --> ConstanciaEmitidaFirmada : Guardado con código de verificación
+NoAptoParaConstancia --> [*]
+ConstanciaEmitidaFirmada --> [*]
+@enduml

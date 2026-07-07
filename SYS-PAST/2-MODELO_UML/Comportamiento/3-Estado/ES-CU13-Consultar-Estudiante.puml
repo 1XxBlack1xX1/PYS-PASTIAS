@@ -1,0 +1,10 @@
+@startuml CU13_Estado_Consultar_Estudiante
+[*] --> EsperandoCriterioBusqueda
+
+EsperandoCriterioBusqueda --> BuscandoEnBaseDatos : Ingresar código/DNI y buscar
+BuscandoEnBaseDatos --> EstudianteNoEncontrado : Cero coincidencias
+EstudianteNoEncontrado --> EsperandoCriterioBusqueda : Intentar otro parámetro
+
+BuscandoEnBaseDatos --> HistorialYPerfilMostrado : Coincidencia exitosa
+HistorialYPerfilMostrado --> [*]
+@enduml
