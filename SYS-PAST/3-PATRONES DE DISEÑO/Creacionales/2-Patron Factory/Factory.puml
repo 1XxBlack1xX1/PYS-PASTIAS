@@ -1,0 +1,41 @@
+@startuml Patron_Factory_Usuarios
+
+skinparam style strictuml
+
+abstract class UsuarioFactory {
+    + {abstract} crearUsuario(): Usuario
+    + registrarUsuario(): void
+}
+
+class EstudianteFactory {
+    + crearUsuario(): Usuario
+}
+
+class EmpresaFactory {
+    + crearUsuario(): Usuario
+}
+
+interface Usuario {
+    + obtenerPermisos(): List<String>
+}
+
+class EstudianteUsuario {
+    - String codigoAlumno
+    + obtenerPermisos(): List<String>
+}
+
+class EmpresaUsuario {
+    - String rucEmpresa
+    + obtenerPermisos(): List<String>
+}
+
+UsuarioFactory <|-- EstudianteFactory
+UsuarioFactory <|-- EmpresaFactory
+
+Usuario <|.. EstudianteUsuario
+Usuario <|.. EmpresaUsuario
+
+EstudianteFactory ..> EstudianteUsuario : <<create>>
+EmpresaFactory ..> EmpresaUsuario : <<create>>
+
+@enduml

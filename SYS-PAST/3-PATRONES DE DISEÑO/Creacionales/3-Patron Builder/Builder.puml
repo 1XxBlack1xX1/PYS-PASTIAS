@@ -1,0 +1,41 @@
+@startuml Patron_Builder_Vacante
+
+skinparam style strictuml
+
+class Vacante {
+    - String titulo
+    - String descripcion
+    - double sueldo
+    - String requisitos
+    - String sede
+    - boolean requiereConvenio
+    
+    + Vacante(VacanteBuilder builder)
+}
+
+class VacanteBuilder {
+    - String titulo
+    - String descripcion
+    - double sueldo
+    - String requisitos
+    - String sede
+    - boolean requiereConvenio
+    
+    + setTitulo(String titulo): VacanteBuilder
+    + setDescripcion(String descripcion): VacanteBuilder
+    + setSueldo(double sueldo): VacanteBuilder
+    + setRequisitos(String requisitos): VacanteBuilder
+    + setSede(String sede): VacanteBuilder
+    + setRequiereConvenio(boolean requiere): VacanteBuilder
+    + build(): Vacante
+}
+
+class DirectorioConvocatorias {
+    - VacanteBuilder builder
+    + construirVacanteUrgente(String titulo, String desc): Vacante
+}
+
+VacanteBuilder ..> Vacante : <<create>>
+DirectorioConvocatorias --> VacanteBuilder : utiliza
+
+@enduml
