@@ -1,0 +1,19 @@
+@startuml CU17_Actualizar_Vacante
+autonumber
+actor "Empresa" as Actor
+participant "App Web" as UI
+participant "VacanteController" as Ctrl
+participant "VacanteService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Cambia la descripción o los requisitos de una vacante
+UI -> Ctrl: actualizarVacante(idVacante, nuevosDatos)
+Ctrl -> Serv: modificarVacante(idVacante, nuevosDatos)
+activate Serv
+Serv -> DB: UPDATE vacantes SET ... WHERE id = idVacante
+DB --> Serv: ok
+Ctrl <-- Serv: vacanteActualizada
+deactivate Serv
+UI <-- Ctrl: mostrarVacanteModificada()
+Actor <-- UI: Muestra "Datos de la vacante actualizados"
+@enduml

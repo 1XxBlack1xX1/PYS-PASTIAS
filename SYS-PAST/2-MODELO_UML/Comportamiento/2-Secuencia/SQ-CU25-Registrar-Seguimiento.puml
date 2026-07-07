@@ -1,0 +1,19 @@
+@startuml CU25_Registrar_Seguimiento
+autonumber
+actor "Supervisor" as Actor
+participant "App Web" as UI
+participant "SeguimientoController" as Ctrl
+participant "SeguimientoService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Registra una nueva visita o llamada de seguimiento (detalles, avances)
+UI -> Ctrl: guardarSeguimiento(idEstudiante, detalle)
+Ctrl -> Serv: registrarAvanceSeguimiento(idEstudiante, detalle)
+activate Serv
+Serv -> DB: INSERT INTO seguimientos(id_estudiante, fecha, observaciones) VALUES(...)
+DB --> Serv: ok
+Ctrl <-- Serv: seguimientoGuardado
+deactivate Serv
+UI <-- Ctrl: anexarFilaSeguimiento()
+Actor <-- UI: Muestra "Seguimiento registrado exitosamente"
+@enduml

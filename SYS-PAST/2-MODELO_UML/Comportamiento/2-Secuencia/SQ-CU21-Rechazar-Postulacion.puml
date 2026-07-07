@@ -1,0 +1,19 @@
+@startuml CU21_Rechazar_Postulacion
+autonumber
+actor "Empresa / Coordinador" as Actor
+participant "App Web" as UI
+participant "PostulacionController" as Ctrl
+participant "PostulacionService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona postulación, ingresa motivo de rechazo y confirma
+UI -> Ctrl: rechazarPostulacion(idPostulacion, motivo)
+Ctrl -> Serv: denegarPostulacionEstudiante(idPostulacion, motivo)
+activate Serv
+Serv -> DB: UPDATE postulaciones SET estado = 'RECHAZADA', observaciones = motivo WHERE id = idPostulacion
+DB --> Serv: ok
+Ctrl <-- Serv: postulacionRechazada
+deactivate Serv
+UI <-- Ctrl: refrescarPostulaciones()
+Actor <-- UI: Muestra "Postulación rechazada"
+@enduml

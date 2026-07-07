@@ -1,0 +1,21 @@
+@startuml CU19_Postular_Vacante
+autonumber
+actor "Estudiante" as Actor
+participant "App Web" as UI
+participant "PostulacionController" as Ctrl
+participant "PostulacionService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona vacante y hace clic en "Postular"
+UI -> Ctrl: registrarPostulacion(idVacante, idEstudiante)
+Ctrl -> Serv: crearPostulacion(idVacante, idEstudiante)
+activate Serv
+Serv -> DB: SELECT id FROM postulaciones WHERE id_vacante = idVacante AND id_estudiante = idEstudiante
+DB --> Serv: null (no postuló antes)
+Serv -> DB: INSERT INTO postulaciones(id_vacante, id_estudiante, fecha, estado) VALUES(..., 'PENDIENTE')
+DB --> Serv: postulacion_guardada
+Ctrl <-- Serv: postulacionExitosa
+deactivate Serv
+UI <-- Ctrl: mostrarConfirmacionPostulacion()
+Actor <-- UI: Muestra "Postulación enviada correctamente"
+@enduml

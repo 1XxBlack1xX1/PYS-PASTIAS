@@ -1,0 +1,22 @@
+@startuml CU27_Emitir_Constancia
+autonumber
+actor "Director" as Actor
+participant "App Web" as UI
+participant "ConstanciaController" as Ctrl
+participant "ConstanciaService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Solicita emitir constancia de prácticas para un estudiante apto
+UI -> Ctrl: emitirConstancia(idEstudiante)
+Ctrl -> Serv: validarRequisitosYGenerar(idEstudiante)
+activate Serv
+Serv -> DB: SELECT estado_practicas, nota_final FROM expedientes WHERE id_estudiante = idEstudiante
+DB --> Serv: apto (aprobado)
+Serv -> Serv: estructurarDocumentoConstancia()
+Serv -> DB: INSERT INTO constancias_emitidas(id_estudiante, codigo_verificacion) VALUES(...)
+DB --> Serv: constancia_guardada
+Ctrl <-- Serv: documentoPDFConstancia
+deactivate Serv
+UI <-- Ctrl: descargarPDF(documentoPDFConstancia)
+Actor <-- UI: Descarga automáticamente la constancia oficial emitida en PDF
+@enduml
