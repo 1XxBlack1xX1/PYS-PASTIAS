@@ -1,0 +1,19 @@
+@startuml CU09_Actualizar_Empresa
+autonumber
+actor "Usuario Empresa / Admin" as Actor
+participant "App Web" as UI
+participant "EmpresaController" as Ctrl
+participant "EmpresaService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Modifica los campos del perfil de la empresa
+UI -> Ctrl: actualizarEmpresa(id, nuevosDatos)
+Ctrl -> Serv: modificarDatosEmpresa(id, nuevosDatos)
+activate Serv
+Serv -> DB: UPDATE empresas SET ... WHERE id = id
+DB --> Serv: ok
+Ctrl <-- Serv: datosActualizados
+deactivate Serv
+UI <-- Ctrl: mostrarMensajeActualizacion()
+Actor <-- UI: Muestra "Información de la empresa actualizada"
+@enduml

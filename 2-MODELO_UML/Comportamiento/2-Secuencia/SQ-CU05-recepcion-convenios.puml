@@ -1,0 +1,19 @@
+@startuml CU05_Recepcion_Convenios
+autonumber
+actor "Responsable Convenios" as Actor
+participant "App Web" as UI
+participant "ConvenioController" as Ctrl
+participant "ConvenioService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Carga documento de convenio recibido
+UI -> Ctrl: recepcionarConvenio(datos, documento)
+Ctrl -> Serv: registrarRecepcion(datos, documento)
+activate Serv
+Serv -> DB: INSERT INTO convenios_recibidos(...)
+DB --> Serv: id_convenio
+Ctrl <-- Serv: recepcionConfirmada
+deactivate Serv
+UI <-- Ctrl: mostrarConfirmacion()
+Actor <-- UI: Muestra "Convenio recepcionado correctamente"
+@enduml

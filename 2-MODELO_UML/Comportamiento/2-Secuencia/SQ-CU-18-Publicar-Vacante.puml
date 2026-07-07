@@ -1,0 +1,19 @@
+@startuml CU18_Publicar_Vacante
+autonumber
+actor "Coordinador" as Actor
+participant "App Web" as UI
+participant "VacanteController" as Ctrl
+participant "VacanteService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Aprueba y decide hacer pública una vacante en la bolsa
+UI -> Ctrl: publicarVacante(idVacante)
+Ctrl -> Serv: cambiarEstadoAPublicado(idVacante)
+activate Serv
+Serv -> DB: UPDATE vacantes SET estado = 'PUBLICADA' WHERE id = idVacante
+DB --> Serv: ok
+Ctrl <-- Serv: publicacionExitosa
+deactivate Serv
+UI <-- Ctrl: actualizarEstadoEnPantalla()
+Actor <-- UI: Muestra "La vacante ya es visible para los estudiantes"
+@enduml

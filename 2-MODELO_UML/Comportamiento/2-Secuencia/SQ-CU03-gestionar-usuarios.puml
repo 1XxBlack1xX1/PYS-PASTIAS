@@ -1,0 +1,19 @@
+@startuml CU03_Gestionar_Usuarios
+autonumber
+actor "Administrador" as Actor
+participant "App Web" as UI
+participant "UsuarioController" as Ctrl
+participant "UsuarioService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Solicita listar usuarios
+UI -> Ctrl: obtenerUsuarios()
+Ctrl -> Serv: listarTodosUsuarios()
+activate Serv
+Serv -> DB: SELECT * FROM usuarios
+DB --> Serv: lista_usuarios
+Ctrl <-- Serv: lista_usuarios
+deactivate Serv
+UI <-- Ctrl: mostrarTablaUsuarios(lista)
+Actor <-- UI: Muestra lista de usuarios en pantalla
+@enduml

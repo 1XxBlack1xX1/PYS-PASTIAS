@@ -1,0 +1,19 @@
+@startuml CU12_Actualizar_Estudiante
+autonumber
+actor "Director / Secretaria" as Actor
+participant "App Web" as UI
+participant "EstudianteController" as Ctrl
+participant "EstudianteService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Modifica datos del estudiante (correo, teléfono)
+UI -> Ctrl: actualizarEstudiante(id, nuevosDatos)
+Ctrl -> Serv: guardarCambiosEstudiante(id, nuevosDatos)
+activate Serv
+Serv -> DB: UPDATE estudiantes SET ... WHERE id = id
+DB --> Serv: ok
+Ctrl <-- Serv: estudianteActualizado
+deactivate Serv
+UI <-- Ctrl: mostrarPerfilActualizado()
+Actor <-- UI: Muestra "Datos del estudiante actualizados"
+@enduml

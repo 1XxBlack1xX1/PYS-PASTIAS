@@ -1,0 +1,20 @@
+@startuml CU02_Logearse_Especificacion
+autonumber
+actor "Usuario" as Actor
+participant "App Web" as UI
+participant "AuthController" as Ctrl
+participant "AuthService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Introduce credenciales (usuario, password)
+UI -> Ctrl: login(usuario, password)
+Ctrl -> Serv: autenticarUsuario(usuario, password)
+activate Serv
+Serv -> DB: buscarUsuario(usuario)
+DB --> Serv: datosUsuario (password hash)
+Serv -> Serv: verificarPassword()
+Ctrl <-- Serv: tokenJWT / sesionValida
+deactivate Serv
+UI <-- Ctrl: redireccionarDashboard()
+Actor <-- UI: Muestra pantalla principal (Dashboard)
+@enduml

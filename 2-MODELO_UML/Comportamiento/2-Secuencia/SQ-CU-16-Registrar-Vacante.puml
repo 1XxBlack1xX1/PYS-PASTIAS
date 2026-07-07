@@ -1,0 +1,19 @@
+@startuml CU16_Registrar_Vacante
+autonumber
+actor "Empresa" as Actor
+participant "App Web" as UI
+participant "VacanteController" as Ctrl
+participant "VacanteService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Publica los detalles de un puesto de prácticas (título, requisitos)
+UI -> Ctrl: registrarVacante(datosVacante)
+Ctrl -> Serv: crearVacante(datosVacante)
+activate Serv
+Serv -> DB: INSERT INTO vacantes(id_empresa, titulo, descripcion, estado) VALUES(...)
+DB --> Serv: vacante_creada
+Ctrl <-- Serv: vacanteRegistrada
+deactivate Serv
+UI <-- Ctrl: mostrarMensajeRevision()
+Actor <-- UI: Muestra "Vacante registrada. Pendiente de validación institucional"
+@enduml

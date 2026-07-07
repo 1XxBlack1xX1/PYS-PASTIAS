@@ -1,0 +1,20 @@
+@startuml CU07_Seguimiento_Sedes
+autonumber
+actor "Supervisor" as Actor
+participant "App Web" as UI
+participant "SedeController" as Ctrl
+participant "SedeService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona una sede para ver estado
+UI -> Ctrl: obtenerSeguimientoSede(idSede)
+Ctrl -> Serv: calcularMetricasSede(idSede)
+activate Serv
+Serv -> DB: SELECT * FROM actividades WHERE id_sede = idSede
+DB --> Serv: lista_actividades
+Serv -> Serv: consolidarDatos()
+Ctrl <-- Serv: reporteSede
+deactivate Serv
+UI <-- Ctrl: graficarDatosSede(reporte)
+Actor <-- UI: Muestra panel de seguimiento de la sede
+@enduml

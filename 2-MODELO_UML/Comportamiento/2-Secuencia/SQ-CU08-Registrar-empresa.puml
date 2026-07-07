@@ -1,0 +1,21 @@
+@startuml CU08_Registrar_Empresa
+autonumber
+actor "Usuario Empresa / Admin" as Actor
+participant "App Web" as UI
+participant "EmpresaController" as Ctrl
+participant "EmpresaService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Introduce datos de la empresa (RUC, nombre, dirección)
+UI -> Ctrl: registrarEmpresa(datosEmpresa)
+Ctrl -> Serv: crearEmpresa(datosEmpresa)
+activate Serv
+Serv -> DB: SELECT id FROM empresas WHERE ruc = datos.ruc
+DB --> Serv: null (no existe)
+Serv -> DB: INSERT INTO empresas(...)
+DB --> Serv: empresa_creada
+Ctrl <-- Serv: exitoRegistro
+deactivate Serv
+UI <-- Ctrl: redireccionarPerfilEmpresa()
+Actor <-- UI: Muestra "Empresa registrada con éxito"
+@enduml

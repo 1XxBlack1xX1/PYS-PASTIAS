@@ -1,0 +1,19 @@
+@startuml CU10_Eliminar_Empresa
+autonumber
+actor "Administrador" as Actor
+participant "App Web" as UI
+participant "EmpresaController" as Ctrl
+participant "EmpresaService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Presiona botón "Eliminar Empresa" y confirma
+UI -> Ctrl: eliminarEmpresa(idEmpresa)
+Ctrl -> Serv: darDeBajaEmpresa(idEmpresa)
+activate Serv
+Serv -> DB: UPDATE empresas SET activo = false WHERE id = idEmpresa
+DB --> Serv: ok
+Ctrl <-- Serv: bajaExitosa
+deactivate Serv
+UI <-- Ctrl: removerEmpresaDeTabla()
+Actor <-- UI: Muestra "Empresa eliminada del sistema"
+@enduml
