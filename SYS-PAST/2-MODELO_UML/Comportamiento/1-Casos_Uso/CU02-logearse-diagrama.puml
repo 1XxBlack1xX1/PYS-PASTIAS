@@ -21,7 +21,7 @@ actor "Administrador" as admin
 actor "Director" as dir
 actor "Estudiante Contable" as est
 
-rectangle "SYS PASANTIAS" {
+rectangle "LOGEARSE" {
     usecase "🔐\nValidar\ncredenciales" as uc_validar
     usecase "🎟️\nGenerar\nToken JWT" as uc_jwt
     usecase "<b>CU02</b>\nLogearse" as uc_main

@@ -52,7 +52,7 @@ actor :Director: as Dir
 actor :Estudiante: as Student
 actor :Base de Datos de Pasantías: as DB <<Sistema>>
 
-rectangle "SYS PASANTIAS — VALIDACIÓN" {
+rectangle "VALIDACIÓN" {
     usecase "CU-06\nValidación de vacantes\npor empresa" as CU06
     usecase "Verificar límite de cupos" as VerifyCups <<include>>
     usecase "Mostrar vacantes disponibles" as ShowVacancies <<include>>

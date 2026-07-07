@@ -5,7 +5,7 @@ left to right direction
 actor :Director: as Dir
 actor :Base de Datos de Pasantías: as DB <<Sistema>>
 
-rectangle "SYS PASANTIAS" {
+rectangle "RECEPCION" {
     usecase "CU05\nRecepción de convenios de empresas" as CU05
     usecase "Solicitar datos y vigencia" as RequestData
     usecase "Asociar convenio a empresa" as AssociateCompany

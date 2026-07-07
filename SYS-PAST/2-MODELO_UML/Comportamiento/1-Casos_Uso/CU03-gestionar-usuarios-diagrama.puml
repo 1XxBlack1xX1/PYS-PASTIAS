@@ -20,7 +20,7 @@ skinparam package {
 actor "Administrador" as admin
 actor "Director" as dir
 
-rectangle "SYS PASANTIAS" {
+rectangle "GESTIONAR USUARIOS" {
     usecase "🔍\nValidar registros\nduplicados" as uc_validar
     usecase "🔑\nActualizar niveles\nde acceso (Roles)" as uc_roles
     usecase "<b>CU03</b>\nGestionar usuarios" as uc_main
