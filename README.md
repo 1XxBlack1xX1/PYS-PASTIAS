@@ -11,9 +11,6 @@ Documentación del Sistema de gestión de pasantias en la escuela de administrac
 - Modelo C4
 - UML
 - casos de uso
-## Caso de Uso - Logearse
-
-![](http:plantuml.com/plantuml/png/ZP5DRXD148NtSuhIPC4g1aSHGiWQPN1Y1288QGm8OOJAtSNGyKorLTsD4H5N01Qis8Gxi67FJRW0787vSICxNYIpcrVVgrTwVUGyYWzrbTo0iUKtfWo2olpwmQ09bAsia0DotbGMj5N4dXAtCBn4mHg28uMEu3o1vhk7Qb6A3Qp7hH7sXfDyE1dsCokQP5UVMFQzkdfhFFtN2lE1O7YOVDn8G-KRxloQ-_OEJWwFRz_PlIncRUtEHUngQzt6SDdOiQJhHaUr2KZwczDSruQDyuBQIWhe05ibZe-DaFBhYJOIzHFdWpR8djhNyJYlg4F8-IHfBSXbHP0MBmfuaXVvu-c3l4ZNTyR7IVzUVFqousTO6OqoOoMaYPN1YbotBQZNx_hXPT-dYpy_Fy_uFZ59QvtQ1J4yV3wDlhELt_QCvjduwQs3qSrvDkD7jYGKHv6kqV0s_llRzoxXr3hV9PmIEpmZq0GaOYLQkv-kqBOts7-vxlZLVXOtmrt8bI9DYJPo1K7ENq4aKHc4vI3RwAX1HYF3gWgQicmNQohPGVhpOQ3jYWSROGr6xpsnRgWZOXtgVm00)
 
 ## Caso de Uso - Gstionar solicitudes
 
