@@ -1,0 +1,115 @@
+@startuml Diagrama_General_SIGEP
+left to right direction
+skinparam packageStyle rectangle
+
+title Diagrama General de Casos de Uso - SIGEP
+
+' --- ACTORES ---
+actor "Director / Secretaria" as Admin
+actor "Estudiante" as Estudiante
+actor "Empresa" as Empresa
+actor "Coordinador Académico" as Coordinador
+actor "Usuario General" as Usuario
+
+' --- HERENCIA DE ACTORES ---
+Admin --|> Usuario
+Estudiante --|> Usuario
+Empresa --|> Usuario
+Coordinador --|> Usuario
+
+rectangle "Sistema de Gestión de Pasantías (SIGEP)" {
+
+    ' Módulo 1: Seguridad y Configuración
+    package "Módulo de Seguridad y Usuarios" {
+        usecase "CU02: Logearse en el Sistema" as CU02
+        usecase "CU03: Gestionar Usuarios" as CU03
+        usecase "CU23: Consultar Historial (Auditoría)" as CU23
+    }
+
+    ' Módulo 2: Gestión Financiera
+    package "Módulo Financiero y Contable" {
+        usecase "CU01: Registrar Reporte Contable" as CU01
+        usecase "CU22: Generar Reportes" as CU22
+    }
+
+    ' Módulo 3: Empresas y Convenios
+    package "Módulo de Empresas y Convenios" {
+        usecase "CU05: Recepción de Convenios" as CU05
+        usecase "CU08: Registrar Empresa" as CU08
+        usecase "CU09: Actualizar Empresa" as CU09
+        usecase "CU10: Eliminar Empresa" as CU10
+        usecase "CU14: Registrar Convenio" as CU14
+        usecase "CU15: Renovar Convenio" as CU15
+    }
+
+    ' Módulo 4: Gestión de Alumnos
+    package "Módulo de Alumnos" {
+        usecase "CU11: Registrar Estudiante" as CU11
+        usecase "CU12: Actualizar Estudiante" as CU12
+        usecase "CU13: Consultar Estudiante" as CU13
+    }
+
+    ' Módulo 5: Convocatorias y Vacantes
+    package "Módulo de Convocatorias y Vacantes" {
+        usecase "CU04: Gestionar Solicitudes" as CU04
+        usecase "CU06: Validación de Vacantes" as CU06
+        usecase "CU16: Registrar Vacante" as CU16
+        usecase "CU17: Actualizar Vacante" as CU17
+        usecase "CU18: Publicar Vacante" as CU18
+    }
+
+    ' Módulo 6: Postulaciones y Seguimiento Académico
+    package "Módulo de Postulaciones y Seguimiento" {
+        usecase "CU07: Seguimiento de Sedes" as CU07
+        usecase "CU19: Postular a Vacante" as CU19
+        usecase "CU20: Aprobar Postulación" as CU20
+        usecase "CU21: Rechazar Postulación" as CU21
+        usecase "CU24: Asignar Supervisor" as CU24
+        usecase "CU25: Registrar Seguimiento" as CU25
+        usecase "CU26: Evaluar Desempeño" as CU26
+        usecase "CU27: Emitir Constancia" as CU27
+        usecase "CU28: Cerrar Proceso" as CU28
+    }
+}
+
+' --- ASOCIACIONES DE ACTORES CON CASOS DE USO ---
+
+' Usuario General
+Usuario --> CU02
+
+' Director / Secretaria / Administrador
+Admin --> CU01
+Admin --> CU03
+Admin --> CU22
+Admin --> CU23
+
+' Estudiante
+Estudiante --> CU13
+Estudiante --> CU19
+
+' Empresa
+Empresa --> CU05
+Empresa --> CU08
+Empresa --> CU09
+Empresa --> CU10
+Empresa --> CU16
+Empresa --> CU17
+Empresa --> CU26
+
+' Coordinador Académico
+Coordinador --> CU04
+Coordinador --> CU06
+Coordinador --> CU07
+Coordinador --> CU11
+Coordinador --> CU12
+Coordinador --> CU14
+Coordinador --> CU15
+Coordinador --> CU18
+Coordinador --> CU20
+Coordinador --> CU21
+Coordinador --> CU24
+Coordinador --> CU25
+Coordinador --> CU27
+Coordinador --> CU28
+
+@enduml

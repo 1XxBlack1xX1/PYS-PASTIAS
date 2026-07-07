@@ -1,0 +1,59 @@
+@startuml CU22_Generar_Reportes_Secuencia
+
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+actor "Director/Secretaria" as Actor
+participant "App Web" as UI
+participant "FinancieroController" as Controller
+participant "FinancieroService" as Service
+database "BaseDatos" as DB
+
+Actor -> UI : Selecciona periodo y filtros
+activate UI
+
+UI -> Controller : generarReporte(periodo, filtros)
+activate Controller
+
+Controller -> Service : calcularReporte(periodo, filtros)
+activate Service
+
+Service -> DB : obtenerPagos(periodo, filtros)
+activate DB
+DB --> Service : Lista de pagos registrados
+deactivate DB
+
+Service -> DB : obtenerDeudores(periodo, filtros)
+activate DB
+DB --> Service : Lista de estudiantes deudores
+deactivate DB
+
+Service -> Service : calcularTotales(pagos)
+
+Service --> Controller : retornaReporte(totales, deudores)
+deactivate Service
+
+Controller --> UI : mostrarReporte(totales, deudores)
+deactivate Controller
+
+UI --> Actor : Muestra reporte consolidado
+
+opt Usuario solicita exportar
+    Actor -> UI : Presiona "Exportar"
+    UI -> Controller : exportarReporte(formato)
+    activate Controller
+    
+    Controller -> Service : generarArchivo(formato, datos)
+    activate Service
+    Service --> Controller : archivoGenerado
+    deactivate Service
+    
+    Controller --> UI : descargarArchivo(archivo)
+    deactivate Controller
+    
+    UI --> Actor : Muestra "Reporte exportado exitosamente"
+end
+
+deactivate UI
+
+@enduml
