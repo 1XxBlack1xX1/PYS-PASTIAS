@@ -30,6 +30,11 @@ UML
 
 -Larico Quispe Nelson Antony
 
+-Bilbao Lizarraga Andre Fabrizio
+
+-Berrios Flores Abel Yeins 
+
+
 ## 1. Arquitectura de Actores y Permisos
 El sistema implementa un patrón de herencia para la gestión de accesos:
 
@@ -61,6 +66,9 @@ Es el puente entre la oferta y la demanda. Las empresas registran intenciones de
 
 ## 7. Módulo de Postulaciones y Seguimiento Académico
 Representa el flujo transaccional principal (Core Business). Describe el ciclo desde que un estudiante ejecuta el CU19: Postular a Vacante, pasando por los filtros automáticos y manuales de aceptación (CU20 / CU21), el monitoreo en campo de los docentes delegados (CU24, CU25), la calificación final de la empresa (CU26) y la culminación administrativa con la CU27: Emitir Constancia y el CU28: Cerrar Proceso.
+
+## 8. Modulo de Seguridad y Usuario
+Estudiantes y Docentes: El sistema suele integrarse con el proveedor de identidad de la universidad mediante Single Sign-On (SSO) (ej. Google Workspace institucional, Microsoft Entra ID o el sistema académico central) para evitar que creen cuentas desde cero.
 
 ## diagrama general de casos de uso:
 ![diagrama de Contexto](http://www.plantuml.com/plantuml/png/VPRFRjiu4CRlUWh2bxQ7O2tvZsCVYXgAjmsm6mVHPgy58x4kKOeqICf0kzi7siCU5dq4lzWEAL6XbL5p2VaDV-JCHzBYEsEfjaqjo0sd1qrh-l4zaqnJyR6uVR-xJmJxP8bLHFF3PqighbbfkPA9-SBbaG90ZhJyGW-ii5y58ovCvK6m9B7SWX2c9Tsqf68afqOPrtWqYboHTg7a5RcwkYBR_8_zmwvmxOIMLcaokV6BGkiNKh1ICyYOqmcXXcohciimR6TiKt4gBVEnvsu_e3vgPbgoQuTGhfIkkAGLTBObhSx_rBnKVcGK2gCVJGCfg52I7zPfeOmFkuVTNNwx9JUxYv9ynj3w-srFF2SwqDiKByKecyj0qZjF9WKtbe7b5OCKZUNd7zArxwc1LSx_GhQllUTl9kIl927mzuhyVlvHDKAHT0Cc7nhDArgHhr2z_CIXIqitYniRzfjC0bAn60aP6JSvwVuQmqfgWCaVfzc6_AOEZ6heCqcO85s-hTqm0CLccxOO9QdkrmZ834CoG21_qmWBo0TOH6bE1Ncz1R-X3KwywIR8sWc-3zs0N7i7VmNRPScPfhWDVLorlbdw9DYO2M3p0pj0IffgQ1sLjgo7GbKfMfNFIR88DA6A3AzYjWddtRIfdPW4yqPt4niyLiZ25LAoOnbEMK-4AXOeTnqR4DzC5qE9zGQkfcseuDzU8ciCIQTGkE1muuO0X51W7cSLAWd874My0LAT4621RmSi4b_BhMXgEROR8Jww0Ud5IHhy1hem2cMHbnYLeLHqdp1ev0ujF7LI9NNtpv-gFsdfmD6Qnu3HKpYFVnmA9NZ98RjmCI2EKiiDJ2nuHSFX3Ulqt1BrOHbP7f1W0awiOh-7o0f5u8BSDqzGoKlW6ZTw2OI2NH5GZv8CVFE_ot3-cRGg-gwDsVupVCnvg2nUn7yB8kFnsjPzffhGONNeLSwcuE1HgoUg0-ethOKWZ4B-RfIVwRSHAaMfEInb-C4VfUR8z8aRfGCoHv55V28YFmArG2dOiDs9YWQO6sPOVMJd_tfaYI8hG6fkkVOtqReF3Wt42YNW7ELCQ-U0LYKp_GBX57tldrx57bui-Ut-RbV4xvPyVqTo27hniTYxmOuPF8EIhW_Xj-rd7CQWRpVe-7UGyyk_gtmlSEbbTtRHpRBBxWmMYPzwpyrkH3f3j3LG_HEm-n_MMmo5ww6m7WZfT2WiXy9g86HBbm7-wamYEImvnyGb9guGCKqnCSF4EIOkCF4Q4RCf9gQOECV41IPY5S7XJTunMJMr-1y0)
