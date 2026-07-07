@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Diagrama de Contexto - Sistema de Gestión de Pasantías
+
+Person(estudiante, "Estudiante", "Busca vacantes, postula y revisa el estado de su proceso.")
+Person(empresa, "Representante de Empresa", "Registra su organización, publica vacantes y evalúa postulantes.")
+Person(director, "Director / Administrador", "Gestiona convenios, asigna supervisores y emite constancias.")
+Person(supervisor, "Docente Supervisor", "Realiza visitas de seguimiento y evalúa las bitácoras del alumno.")
+
+System(sistemaPasantias, "Sistema de Gestión de Pasantías", "Permite controlar todo el ciclo de pasantías y convenios institucionales.")
+
+System_Ext(sistemaAcademico, "Sistema Académico", "Provee datos de matrícula y validación de requisitos de los alumnos.")
+
+Rel(estudiante, sistemaPasantias, "Busca vacantes, postula y sube CV")
+Rel(empresa, sistemaPasantias, "Registra ofertas de pasantía y aprueba/rechaza candidatos")
+Rel(director, sistemaPasantias, "Aprueba vacantes, registra convenios y cierra expedientes")
+Rel(supervisor, sistemaPasantias, "Registra bitácoras de seguimiento y califica el desempeño")
+
+Rel(sistemaPasantias, sistemaAcademico, "Importa información académica", "HTTPS/REST")
+@endum

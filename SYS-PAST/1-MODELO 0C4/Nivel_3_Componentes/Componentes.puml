@@ -1,0 +1,29 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Diagrama de Componentes - Monolito de Pasantías
+
+Container(frontend, "Interfaz de Usuario", "HTML/Thymeleaf/React", "Vistas del sistema que interactúan con el backend.")
+
+System_Boundary(backend_modules, "Módulos Internos del Backend") {
+    Component(modEmpresas, "Módulo de Empresas", "Spring Component", "Gestiona el registro, actualización e inactivación de empresas aliadas (CU-08, CU-09, CU-10).")
+    Component(modEstudiantes, "Módulo de Estudiantes", "Spring Component", "Administra los expedientes e importación académica (CU-11, CU-12, CU-13).")
+    Component(modConvenios, "Módulo de Convenios", "Spring Component", "Controla la vigencia y renovación de convenios marcos (CU-14, CU-15).")
+    Component(modVacantes, "Módulo de Vacantes y Postulaciones", "Spring Component", "Maneja el flujo de ofertas de empleo, postulaciones y aprobaciones (CU-16 al CU-21).")
+    Component(modSeguimiento, "Módulo de Seguimiento y Evaluación", "Spring Component", "Asigna supervisores, bitácoras de visitas y actas de cierre (CU-24 al CU-28).")
+}
+
+ContainerDb(db, "Base de Datos Central", "Relacional", "Esquema compartido.")
+
+Rel(frontend, modEmpresas, "Envía peticiones de empresas")
+Rel(frontend, modEstudiantes, "Envía peticiones de alumnos")
+Rel(frontend, modConvenios, "Administra convenios")
+Rel(frontend, modVacantes, "Gestiona ofertas y postulaciones")
+Rel(frontend, modSeguimiento, "Registra bitácoras de notas")
+
+Rel(modEmpresas, db, "CRUD", "JDBC")
+Rel(modEstudiantes, db, "CRUD", "JDBC")
+Rel(modConvenios, db, "CRUD", "JDBC")
+Rel(modVacantes, db, "CRUD", "JDBC")
+Rel(modSeguimiento, db, "CRUD", "JDBC")
+@endum

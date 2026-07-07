@@ -1,32 +1,21 @@
-@startuml
-title Patrón Singleton - SYS COLEGIO EMANUEL
+@startuml Patron_Singleton_Conexion
 
-class GestorSesion {
-    - instancia: GestorSesion
-    - usuarioActual: String
-    - rol: String
-    - tokenJWT: String
-
-    - GestorSesion()
-    + getInstance(): GestorSesion
-    + iniciarSesion(usuario: String, rol: String, token: String): void
-    + cerrarSesion(): void
-    + getUsuarioActual(): String
-    + getRol(): String
-    + getTokenJWT(): String
-    + estaAutenticado(): boolean
+class BaseDatosConexion {
+    - static BaseDatosConexion instancia
+    - String cadenaConexion
+    - boolean conectado
+    
+    - BaseDatosConexion()
+    + static BaseDatosConexion getInstancia()
+    + void ejecutarQuery(String sql)
+    + void desconectar()
 }
 
-note right of GestorSesion
-  Solo existe UNA instancia del gestor
-  de sesión durante toda la ejecución
-  del sistema SYS COLEGIO EMANUEL.
-
-  Garantiza que solo un usuario
-  esté autenticado a la vez
-  por dispositivo.
+note right of BaseDatosConexion::getInstancia
+  if (instancia == null) {
+      instancia = new BaseDatosConexion()
+  }
+  return instancia
 end note
-
-GestorSesion --> GestorSesion : instancia única
 
 @enduml

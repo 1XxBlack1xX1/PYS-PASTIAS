@@ -1,0 +1,18 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Diagrama de Contenedores - Sistema de Gestión de Pasantías
+
+Person(usuarios, "Usuarios del Sistema", "Estudiantes, Empresas, Directores, Supervisores")
+
+System_Boundary(monolito, "Límite del Sistema de Pasantías") {
+    Container(webApp, "Aplicación Web (Monolito)", "Java / Spring Boot", "Sirve las vistas de usuario y procesa toda la lógica de negocio modularizada.")
+    ContainerDb(db, "Base de Datos Central", "PostgreSQL / MySQL", "Almacena la información de empresas, alumnos, vacantes, convenios y bitácoras de seguimiento.", "JDBC (Singleton)")
+}
+
+System_Ext(sistemaAcademico, "Sistema Académico", "Provee datos de estudiantes.")
+
+Rel(usuarios, webApp, "Usa el portal mediante", "HTTPS / Navegador Web")
+Rel(webApp, db, "Lee y escribe datos usando una conexión única (Singleton)", "SQL / Puerto 3306-5432")
+Rel(webApp, sistemaAcademico, "Consume datos de alumnos", "HTTPS / JSON API")
+@endum
