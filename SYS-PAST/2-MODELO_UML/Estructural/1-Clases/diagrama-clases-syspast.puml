@@ -1,0 +1,284 @@
+@startuml
+title Diagrama de Clases - Sistema de Gestión de Pasantías
+title Diagrama de Clases - SYS PASANTIAS
+
+'====================================
+' ENUMS
+' ===================================
+enum EstadoConvenio {
+    SOLICITADO
+    APROBADO
+    RECHAZADO
+    FINALIZADO
+}
+
+enum EstadoPostulacion {
+    PENDIENTES
+    ENTREVISTA
+    ACEPTADO
+    DESCARTADO
+enum EstadoSolicitud {
+    PENDIENTE
+    APROBADA
+    RECHAZADA
+}
+
+enum TipoMovimientoCupo {
+    INGRESO
+    SALIDA
+    TRANSFERENCIA
+}
+
+enum Rol {
+    ADMINISTRADOR
+    ESTUDIANTE
+    DIRECTOR
+}
+
+'=================================
+' MICROSERVICIO DE USUARIOS
+' (Gestión de perfiles y roles)
+'=================================
+
+abstract class Usuario {
+    - idUsuario: int
+    - email: String
+    - password: String
+    - nombreCompleto: String
+    + login(): boolean
+}
+
+class Estudiante {
+    - codigoAlumno: String
+    - carrera: String
+    - ciclo: int
+    + postularOferta(oferta: OfertaPractica): void
+    + subirCV(): void
+}
+
+class TutorEmpresarial {
+    - cargo: String
+    - telefono: String
+    + evaluarDesempeno(pasantia: Pasantia): void
+}
+
+class Administrador {
+    + validarConvenio(convenio: Convenio): void
+    + generarReporteGeneral(): void
+    - codigoEstudiante: String
+    - sedeAsignada: String
+
+    + registrarSolicitud(): Solicitud
+    + consultarVacantes(): void
+}
+
+class Director {
+    + visualizarDashboard(): void
+    + consultarEstadisticas(): double
+    + supervisarSedes(): void
+}
+
+class Administrador {
+    + registrarUsuario(): void
+    + actualizarUsuario(): void
+    + eliminarUsuario(): void
+    + generarReporteSolicitudes(): void
+    + generarReporteVacantes(): void
+}
+
+Usuario <|-- Estudiante : es un tipo de <
+Usuario <|-- Administrador : es un tipo de <
+Usuario <|-- Director : es un tipo de <
+
+class Permiso {
+    - idPermiso: int
+    - nombre: String
+    - descripcion: String
+}
+
+Usuario <|-- Estudiante
+Usuario <|-- TutorEmpresarial
+Usuario <|-- Administrador
+
+'=====================================
+'GESTIÓN DE PASANTÍAS
+'=====================================
+
+class Empresa {
+    - idEmpresa: int
+    - razonSocial: String
+    - ruc: String
+    - direccion: String
+}
+
+class OfertaPractica {
+    - idOferta: int
+    - titulo: String
+    - descripcion: String
+    - remunerada: boolean
+}
+
+class Pasantia {
+    - idPasantia: int
+    - fechaInicio: Date
+    - fechaFin: Date
+    - horasSemanales: int
+    - estado: EstadoPostulacion
+}
+
+class Convenio {
+    - idConvenio: int
+    - fechaFirma: Date
+    - fechaVencimiento: Date
+    - estado: EstadoConvenio
+' MICROSERVICIO DE PASANTÍAS
+' (Gestión de solicitudes y vacantes)
+'=====================================
+
+class Solicitud {
+    - idSolicitud: int
+    - fecha: DateTime
+    - totalHoras: double
+    - factorPuntaje: double
+    - estado: EstadoSolicitud
+
+    + calcularTotalHoras(): double
+    + calcularPuntaje(): double
+    + registrarAprobacion(): void
+    + generarDocumento(): void
+}
+
+class DetalleSolicitud {
+    - cantidadMeses: int
+    - horasPorMes: double
+    - subtotalHoras: double
+
+    + calcularSubtotal(): double
+}
+
+'=====================================
+' MICROSERVICIO DE DOCUMENTACIÓN
+' (Expediente digital / Diplomas)
+'=====================================
+
+class ExpedienteDigital {
+    - idExpediente: int
+    - serie: String
+    - numero: String
+    - fechaEmision: DateTime
+
+    + emitir(): void
+    + descargarPDF(): void
+}
+
+Solicitud "1" *-- "1..*" DetalleSolicitud : contiene
+Solicitud "1" --> "1" ExpedienteDigital : genera
+Estudiante "1" --> "0..*" Solicitud : registra
+
+'=========================================
+' GESTIÓN DE VACANTES Y EMPRESAS
+' (Perteneciente al Microservicio de Pasantías)
+'=========================================
+
+class Vacante {
+    - idVacante: int
+    - nombreCargo: String
+    - empresaOrigen: String
+    - fechaVencimiento: Date
+    - apoyoEconomico: double
+    - requiereConvenio: boolean
+
+    + actualizarCondiciones(): void
+    + validarVencimiento(): boolean
+}
+
+class Cupo {
+    - idCupo: int
+    - cantidadActual: int
+    - cupoMinimo: int
+    - ubicacionOficina: String
+
+    + aumentarCupos(cantidad:int): void
+    + disminuirCupos(cantidad: int): void
+    + verificarCupoMinimo(): boolean
+}
+
+class SedePasantia {
+    - idSede: int
+    - nombre: String
+    - direccion: String
+
+    + transferirCupos(): void
+    + consultarVacantes(): void
+}
+
+class MovimientoCupo {
+    - idMovimiento: int
+    - fecha: DateTime
+    - tipo: TipoMovimientoCupo
+    - cantidad: int
+    - motivo: String
+
+    + registrarMovimiento(): void
+}
+
+class Empresa {
+    - idEmpresa: int
+    - razonSocial: String
+    - telefono: String
+    - direccion: String
+
+    + suministrarVacantes(): void
+}
+
+SedePasantia "1" o-- "0..*" Cupo : administra
+Cupo "1" --> "1" Vacante : referencia
+DetalleSolicitud "*" --> "1" Vacante : incluye
+
+MovimientoCupo "*" --> "1" Vacante : afecta >
+MovimientoCupo "*" --> "1" SedePasantia : ocurre en >
+
+Empresa "1" --> "*" Vacante : suministra
+
+'====================================
+' MICROSERVICIO DE AUDITORÍA
+' (Auditoría de aprobaciones)
+'====================================
+
+class Auditoria {
+    - idAuditoria: int
+    - fechaHora: DateTime
+    - accion: String
+    - modulo: String
+    - descripcion: String
+    - ipOrigen: String
+
+    + registrarEvento(): void
+    + generarTraza(): void
+}
+
+'=========================================
+'RELACIONES
+'=========================================
+
+Empresa "1" *-- "0..*" OfertaPractica : publica
+Empresa "1" --> "1" Convenio : suscribe
+OfertaPractica "1" <-- "*" Pasantia : se basa en
+Estudiante "1" --> "*" Pasantia : realiza
+TutorEmpresarial "1" --> "*" Pasantia : supervisa
+
+class Documento {
+    - idDocumento: int
+    - tipo: String
+    - rutaArchivo: String
+    - fechaCarga: Date
+}
+'========================================
+' RELACIONES ADICIONALES (Seguimiento)
+'========================================
+
+Administrador --> SedePasantia : gestiona
+Director --> SedePasantia : supervisa
+
+Pasantia "1" o-- "*" Documento : gestiona
+@enduml

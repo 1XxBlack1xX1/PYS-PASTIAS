@@ -1,51 +1,29 @@
-@startuml
-title Patrón Observer - SYS COLEGIO EMANUEL
+@startuml Patron_Observer_Postulacion
 
-interface Observador {
-    + actualizar(evento: String, datos: String): void
+interface PostulacionObserver {
+    +actualizar(String estado, String detalle)
 }
 
-interface Sujeto {
-    + agregarObservador(obs: Observador): void
-    + eliminarObservador(obs: Observador): void
-    + notificarObservadores(evento: String, datos: String): void
+class EstudianteNotificacion {
+    +actualizar(String estado, String detalle)
 }
 
-class GestorAsistencia {
-    - observadores: List<Observador>
-    + agregarObservador(obs: Observador): void
-    + eliminarObservador(obs: Observador): void
-    + notificarObservadores(evento: String, datos: String): void
-    + registrarAsistencia(alumno: String, estado: String): void
+class CoordinadorNotificacion {
+    +actualizar(String estado, String detalle)
 }
 
-class NotificadorPadre {
-    - nombrePadre: String
-    + actualizar(evento: String, datos: String): void
-    + enviarPush(mensaje: String): void
+class PostulacionContext {
+    - List<PostulacionObserver> observers
+    - String estado
+    - String idPostulacion
+    + adjuntar(PostulacionObserver observer)
+    + desadjuntar(PostulacionObserver observer)
+    + cambiarEstado(String nuevoEstado, String detalle)
+    - notificarObservers()
 }
 
-class RegistroAuditoria {
-    + actualizar(evento: String, datos: String): void
-    + guardarLog(evento: String, datos: String): void
-}
-
-class PanelDirector {
-    + actualizar(evento: String, datos: String): void
-    + actualizarDashboard(datos: String): void
-}
-
-Sujeto <|.. GestorAsistencia : implementa
-Observador <|.. NotificadorPadre : implementa
-Observador <|.. RegistroAuditoria : implementa
-Observador <|.. PanelDirector : implementa
-GestorAsistencia "1" --> "0..*" Observador : notifica
-
-note bottom of GestorAsistencia
-  Cuando el Auxiliar registra una asistencia,
-  el GestorAsistencia notifica automáticamente
-  a todos los observadores suscritos:
-  padres, auditoría y panel del director.
-end note
+PostulacionObserver <|.. EstudianteNotificacion
+PostulacionObserver <|.. CoordinadorNotificacion
+PostulacionContext --> PostulacionObserver : maneja
 
 @enduml

@@ -1,90 +1,54 @@
-package com.syscolegio.patrones.comportamiento.observer;
-
 import java.util.ArrayList;
 import java.util.List;
 
-// ====== INTERFACES ======
-interface Observador {
-    void actualizar(String evento, String datos);
+// Interfaz del Observador
+interface PostulacionObserver {
+    void actualizar(String estado, String detalle);
 }
 
-interface Sujeto {
-    void agregarObservador(Observador obs);
-
-    void eliminarObservador(Observador obs);
-
-    void notificarObservadores(String evento, String datos);
+// Observador Concreto 1: Notificaciones al Estudiante
+class EstudianteNotificacion implements PostulacionObserver {
+    @Override
+    public void actualizar(String estado, String detalle) {
+        System.out.println("[Email Estudiante] Tu postulación ha cambiado al estado: " + estado + ". Detalle: " + detalle);
+    }
 }
 
-// ====== SUJETO CONCRETO ======
-class GestorAsistencia implements Sujeto {
-    private List<Observador> observadores = new ArrayList<>();
-
+// Observador Concreto 2: Notificaciones al Coordinador
+class CoordinadorNotificacion implements PostulacionObserver {
     @Override
-    public void agregarObservador(Observador obs) {
-        observadores.add(obs);
+    public void actualizar(String estado, String detalle) {
+        System.out.println("[Panel Coordinador] Alerta de auditoría: Postulación actualizada a " + estado);
+    }
+}
+
+// Sujeto (Subject) - El objeto que es observado
+class PostulacionContext {
+    private final List<PostulacionObserver> observers = new ArrayList<>();
+    private String estado;
+    private final String idPostulacion;
+
+    public PostulacionContext(String idPostulacion) {
+        this.idPostulacion = idPostulacion;
     }
 
-    @Override
-    public void eliminarObservador(Observador obs) {
-        observadores.remove(obs);
+    public void adjuntar(PostulacionObserver observer) {
+        observers.add(observer);
     }
 
-    @Override
-    public void notificarObservadores(String evento, String datos) {
-        for (Observador obs : observadores) {
-            obs.actualizar(evento, datos);
+    public void desadjuntar(PostulacionObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void cambiarEstado(String nuevoEstado, String detalle) {
+        this.estado = nuevoEstado;
+        System.out.println("\n--- Cambio de Estado en Postulación " + idPostulacion + " a: " + nuevoEstado + " ---");
+        notificarObservers();
+    }
+
+    private void notificarObservers() {
+        for (PostulacionObserver observer : observers) {
+            observer.actualizar(this.estado, "ID Ref: " + idPostulacion);
         }
-    }
-
-    public void registrarAsistencia(String alumno, String estado) {
-        System.out.println("\n[ASISTENCIA] " + alumno + " -> " + estado);
-        notificarObservadores("ASISTENCIA_REGISTRADA",
-                "Alumno: " + alumno + " | Estado: " + estado);
-    }
-}
-
-// ====== OBSERVADORES CONCRETOS ======
-class NotificadorPadre implements Observador {
-    private String nombrePadre;
-
-    public NotificadorPadre(String nombrePadre) {
-        this.nombrePadre = nombrePadre;
-    }
-
-    @Override
-    public void actualizar(String evento, String datos) {
-        System.out.println("[PUSH -> " + nombrePadre + "] " + datos);
-    }
-}
-
-class RegistroAuditoria implements Observador {
-    @Override
-    public void actualizar(String evento, String datos) {
-        System.out.println("[AUDITORIA] Evento: " + evento + " | " + datos);
-    }
-}
-
-class PanelDirector implements Observador {
-    @Override
-    public void actualizar(String evento, String datos) {
-        System.out.println("[DIRECTOR DASHBOARD] Actualizado: " + datos);
-    }
-}
-
-// ====== MAIN ======
-public class Observer {
-    public static void main(String[] args) {
-        System.out.println("====== PATRÓN OBSERVER - SYS COLEGIO EMANUEL ======");
-
-        GestorAsistencia gestor = new GestorAsistencia();
-
-        gestor.agregarObservador(new NotificadorPadre("Sr. Juan Pérez"));
-        gestor.agregarObservador(new RegistroAuditoria());
-        gestor.agregarObservador(new PanelDirector());
-
-        gestor.registrarAsistencia("Ana García", "TEMPRANO");
-        gestor.registrarAsistencia("Luis Torres", "TARDE");
-        gestor.registrarAsistencia("María López", "FALTA");
     }
 }
