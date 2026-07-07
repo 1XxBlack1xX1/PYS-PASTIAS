@@ -1,4 +1,4 @@
-1. Arquitectura de Actores y Permisos
+## 1. Arquitectura de Actores y Permisos
 El sistema implementa un patrón de herencia para la gestión de accesos:
 
 Usuario General: Es una abstracción de seguridad. Cualquier persona autenticada en el sistema (sea alumno, empresa o coordinador) comparte una frontera común: el acceso obligatorio a través del CU02: Logearse en el Sistema.
@@ -11,23 +11,23 @@ Empresa: Actor externo autorizado que provee el mercado de vacantes (CU16, CU17)
 
 Estudiante: Beneficiario final del sistema. Su interacción se centra en mantener actualizado su perfil académico, consultar su expediente (CU13) y postular a las vacantes activas del mercado (CU19).
 
-2. Organización Modular de los Casos de Uso
+## 2. Organización Modular de los Casos de Uso
 A. Módulo de Seguridad y Usuarios
 Centraliza las fronteras de autenticación y la bitácora inalterable del sistema. A través de la Programación Orientada a Aspectos (AOP), cada vez que un coordinador o administrador altera un registro, el CU23: Consultar Historial guarda una traza exacta de auditoría sin intervenir directamente con la lógica de negocio.
 
-B. Módulo Financiero y Contable
+## B. Módulo Financiero y Contable
 Controla la solvencia económica de los procesos. Antes de emitir actas o permitir postulaciones masivas, el sistema requiere la consolidación de estados de cuenta mediante el CU01 y el CU22 (Generar Reportes). Como se define en la máquina de estados, este módulo procesa en memoria intermedia los totales contables y permite la exportación dinámica a formatos físicos (PDF, Excel, CSV) de forma aislada a errores de red.
 
-C. Módulo de Empresas y Convenios
+## C. Módulo de Empresas y Convenios
 Gobierna la capa de relaciones interinstitucionales. Una empresa no puede registrar vacantes si previamente el Coordinador Académico no ha completado la CU05: Recepción de Convenios y la consecuente aprobación legal mediante el CU14 y CU15 (Registrar y Renovar Convenios).
 
-D. Módulo de Alumnos
+## D. Módulo de Alumnos
 Encargado de la persistencia y ciclo de vida de los datos maestros del cuerpo estudiantil. Controla el registro inicial, las actualizaciones de ciclos académicos y la consulta de deudas financieras previas a la habilitación de prácticas.
 
-E. Módulo de Convocatorias y Vacantes
+## E. Módulo de Convocatorias y Vacantes
 Es el puente entre la oferta y la demanda. Las empresas registran intenciones de vacantes, pero estas entran en un estado de espera hasta que el Coordinador ejecuta el CU06: Validación de Vacantes y activa el flujo para el CU18: Publicar Vacante, momento en el cual se vuelve visible para los estudiantes.
 
-F. Módulo de Postulaciones y Seguimiento Académico
+## F. Módulo de Postulaciones y Seguimiento Académico
 Representa el flujo transaccional principal (Core Business). Describe el ciclo desde que un estudiante ejecuta el CU19: Postular a Vacante, pasando por los filtros automáticos y manuales de aceptación (CU20 / CU21), el monitoreo en campo de los docentes delegados (CU24, CU25), la calificación final de la empresa (CU26) y la culminación administrativa con la CU27: Emitir Constancia y el CU28: Cerrar Proceso.
 ESTE TEXTO MAS LO METES
 
