@@ -30,6 +30,11 @@ UML
 
 -Larico Quispe Nelson Antony
 
+-Bilbao Lizarraga Andre Fabrizio
+
+-Berrios Flores Abel Yeins 
+
+
 ## 1. Arquitectura de Actores y Permisos
 El sistema implementa un patrón de herencia para la gestión de accesos:
 
