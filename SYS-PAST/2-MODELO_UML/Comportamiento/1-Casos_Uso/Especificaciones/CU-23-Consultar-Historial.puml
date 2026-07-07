@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU23": {
+    "Caso de uso": "Consultar historial",
+    "Id": "CU-23",
+    "Breve descripción": "Permite auditar y revisar los registros históricos de actividades, convenios pasados o pasantías concluidas.",
+    "Actores primarios": ["Director", "Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["Acceso al sistema concedido."],
+    "Flujo principal": {
+      "1": "El actor accede al módulo de historial.",
+      "2": "El sistema despliega herramientas de búsqueda por periodos académicos anteriores.",
+      "3": "El actor ingresa los parámetros y consulta.",
+      "4": "El sistema lista cronológicamente todos los registros históricos asociados."
+    },
+    "Postcondiciones": ["Se muestra la información de auditoría o histórica requerida."]
+  }
+}
+@endjson

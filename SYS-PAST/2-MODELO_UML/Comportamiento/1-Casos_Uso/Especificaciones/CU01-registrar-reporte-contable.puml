@@ -1,0 +1,27 @@
+@startjson
+{
+  "Caso de uso": "Registrar reporte contable de pasantía",
+  "Id": "CU-01",
+  "Breve descripción": "El sistema permite al estudiante registrar sus balances, libros contables o reportes de actividades financieras realizadas en la pasantía.",
+  "Actores primarios": [
+    "Estudiante Contable"
+  ],
+  "Actores secundarios": [
+    "Microservicio de Documentación"
+  ],
+  "Precondiciones": [
+    "El estudiante debe estar asignado a una empresa.",
+    "El estado de la pasantía debe ser 'Activo'."
+  ],
+  "Flujo principal": {
+    "1": "El estudiante selecciona la opción de subir reporte mensual.",
+    "2": "El sistema solicita el archivo del libro contable o estado financiero.",
+    "3": "El estudiante adjunta el documento digital.",
+    "4": "El sistema valida el formato y tamaño del archivo.",
+    "5": "El sistema almacena el reporte en el expediente digital."
+  },
+  "Postcondiciones": [
+    "El reporte contable queda registrado y en espera de auditoría."
+  ]
+}
+@endjson

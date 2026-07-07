@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU27": {
+    "Caso de uso": "Emitir constancia",
+    "Id": "CU-27",
+    "Breve descripción": "Permite generar el documento oficial que certifica la culminación satisfactoria de la pasantía.",
+    "Actores primarios": ["Director", "Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El estudiante debe haber cumplido con las horas requeridas y tener aprobadas las evaluaciones."],
+    "Flujo principal": {
+      "1": "El actor selecciona al estudiante apto para certificación.",
+      "2": "El sistema valida de forma automática el cumplimiento de requisitos.",
+      "3": "El sistema genera una constancia digital firmada o con código de verificación QR.",
+      "4": "El sistema habilita la descarga de la constancia al alumno."
+    },
+    "Postcondiciones": ["La constancia de pasantía es emitida y puesta a disposición."]
+  }
+}
+@endjson

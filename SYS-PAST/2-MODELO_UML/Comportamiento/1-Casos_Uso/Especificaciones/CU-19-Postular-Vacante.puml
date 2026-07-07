@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU19": {
+    "Caso de uso": "Postular a vacante",
+    "Id": "CU-19",
+    "Breve descripción": "Permite a un estudiante enviar su postulación a una oferta publicada.",
+    "Actores primarios": ["Estudiante"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El estudiante debe estar habilitado y la vacante en estado 'Publicada'."],
+    "Flujo principal": {
+      "1": "El estudiante busca y selecciona una vacante de su interés.",
+      "2": "El sistema muestra los detalles y el botón de postulación.",
+      "3": "El estudiante confirma el envío de su CV.",
+      "4": "El sistema registra la postulación enlazando al alumno con la vacante."
+    },
+    "Postcondiciones": ["La postulación es enviada exitosamente a la empresa."]
+  }
+}
+@endjson

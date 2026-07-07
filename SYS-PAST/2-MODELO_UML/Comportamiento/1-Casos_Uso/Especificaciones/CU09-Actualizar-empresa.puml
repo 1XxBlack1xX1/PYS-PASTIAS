@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU09": {
+    "Caso de uso": "Actualizar empresa",
+    "Id": "CU-09",
+    "Breve descripción": "Permite modificar los datos de una empresa previamente registrada.",
+    "Actores primarios": ["Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La empresa debe existir en el sistema."],
+    "Flujo principal": {
+      "1": "El administrador busca y selecciona la empresa a modificar.",
+      "2": "El sistema despliega el formulario con los datos actuales.",
+      "3": "El administrador modifica los campos requeridos y guarda los cambios.",
+      "4": "El sistema actualiza la información en la base de datos."
+    },
+    "Postcondiciones": ["Los datos de la empresa son actualizados correctamente."]
+  }
+}
+@endjson

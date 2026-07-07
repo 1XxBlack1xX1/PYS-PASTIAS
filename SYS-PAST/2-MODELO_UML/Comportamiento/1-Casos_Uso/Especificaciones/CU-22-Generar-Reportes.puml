@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU22": {
+    "Caso de uso": "Generar reportes",
+    "Id": "CU-22",
+    "Breve descripción": "Permite exportar estadísticas y reportes consolidados sobre el estado de las pasantías.",
+    "Actores primarios": ["Director", "Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El usuario debe tener acceso al módulo de analítica."],
+    "Flujo principal": {
+      "1": "El actor selecciona el tipo de reporte (estudiantes contratados, convenios por vencer, etc.).",
+      "2": "El sistema solicita los filtros de fecha o sede.",
+      "3": "El sistema procesa la consulta y genera el archivo (PDF/Excel).",
+      "4": "El sistema descarga el archivo generado."
+    },
+    "Postcondiciones": ["Se obtiene el documento del reporte solicitado."]
+  }
+}
+@endjson

@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU17": {
+    "Caso de uso": "Actualizar vacante",
+    "Id": "CU-17",
+    "Breve descripción": "Permite modificar los detalles de una vacante registrada que aún no ha cerrado.",
+    "Actores primarios": ["Empresa"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La vacante debe pertenecer a la empresa y estar abierta."],
+    "Flujo principal": {
+      "1": "La empresa selecciona una de sus vacantes activas.",
+      "2": "El sistema habilita la edición de los campos.",
+      "3": "La empresa modifica las especificaciones y guarda.",
+      "4": "El sistema actualiza la oferta."
+    },
+    "Postcondiciones": ["Los requisitos u oferta de la vacante se modifican."]
+  }
+}
+@endjson

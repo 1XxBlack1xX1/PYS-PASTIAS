@@ -1,0 +1,26 @@
+@startjson
+{
+  "Caso de uso": "Recepción de convenios de empresas",
+  "Id": "CU-05",
+  "Breve descripción": "El sistema registra los convenios institucionales gestionados con empresas externas.",
+  "Actores primarios": [
+    "Director"
+  ],
+  "Actores secundarios": [
+    "Base de Datos de Pasantías"
+  ],
+  "Precondiciones": [
+    "El director debe estar autenticado.",
+    "La empresa debe estar registrada en el sistema."
+  ],
+  "Flujo principal": {
+    "1": "El director selecciona registrar nuevo convenio.",
+    "2": "El sistema solicita los datos del documento y la vigencia.",
+    "3": "El director adjunta el convenio digitalizado.",
+    "4": "El sistema asocia el convenio a la empresa correspondiente."
+  },
+  "Postcondiciones": [
+    "El convenio queda registrado y disponible para la asignación de vacantes."
+  ]
+}
+@endjson

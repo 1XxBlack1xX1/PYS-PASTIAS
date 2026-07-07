@@ -1,0 +1,31 @@
+@startjson
+{
+  "Caso de uso": "Logearse al sistema de pasantías",
+  "Id": "CU-02",
+  "Breve descripción": "El sistema permite a los estudiantes contables, directores y administradores autenticarse mediante credenciales válidas.",
+  "Actores primarios": [
+    "Administrador",
+    "Director",
+    "Estudiante Contable"
+  ],
+  "Actores secundarios": [
+    "Microservicio de Autenticación",
+    "Base de Datos de Usuarios"
+  ],
+  "Precondiciones": [
+    "El usuario debe estar registrado en el sistema.",
+    "El sistema debe estar disponible."
+  ],
+  "Flujo principal": {
+    "1": "El usuario accede al formulario de inicio de sesión.",
+    "2": "El sistema solicita usuario y contraseña.",
+    "3": "El usuario ingresa sus credenciales.",
+    "4": "El sistema valida las credenciales en la Base de Datos.",
+    "5": "El sistema genera un Token JWT para la sesión.",
+    "6": "El sistema concede el acceso según el rol contable o administrativo."
+  },
+  "Postcondiciones": [
+    "La sesión queda autenticada mediante JWT."
+  ]
+}
+@endjson

@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU21": {
+    "Caso de uso": "Rechazar postulación",
+    "Id": "CU-21",
+    "Breve descripción": "Permite descartar la postulación de un estudiante a una vacante determinada.",
+    "Actores primarios": ["Empresa"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["Debe existir una postulación activa."],
+    "Flujo principal": {
+      "1": "La empresa selecciona al postulante no seleccionado.",
+      "2": "La empresa marca la opción 'Rechazar' e ingresa un motivo (opcional).",
+      "3": "El sistema cambia el estado a 'Rechazada'.",
+      "4": "El sistema notifica automáticamente al estudiante."
+    },
+    "Postcondiciones": ["La postulación queda cerrada como no seleccionada."]
+  }
+}
+@endjson

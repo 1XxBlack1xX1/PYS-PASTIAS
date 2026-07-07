@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU18": {
+    "Caso de uso": "Publicar vacante",
+    "Id": "CU-18",
+    "Breve descripción": "Permite hacer visible una vacante para que los estudiantes puedan postular.",
+    "Actores primarios": ["Administrador", "Director"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La vacante debe haber sido registrada previamente."],
+    "Flujo principal": {
+      "1": "El actor revisa la lista de vacantes pendientes de aprobación.",
+      "2": "El sistema muestra el detalle de la solicitud de la empresa.",
+      "3": "El actor aprueba y selecciona la opción 'Publicar'.",
+      "4": "El sistema cambia el estado a 'Publicada' y la hace visible a los alumnos."
+    },
+    "Postcondiciones": ["La vacante es visible en el portal de los estudiantes."]
+  }
+}
+@endjson

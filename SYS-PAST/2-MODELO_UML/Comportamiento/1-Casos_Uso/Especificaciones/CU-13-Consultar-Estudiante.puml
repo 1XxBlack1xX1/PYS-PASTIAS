@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU13": {
+    "Caso de uso": "Consultar estudiante",
+    "Id": "CU-13",
+    "Breve descripción": "Permite visualizar el perfil, datos académicos y estado actual de un estudiante.",
+    "Actores primarios": ["Director", "Administrador", "Supervisor"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El estudiante debe existir en el sistema."],
+    "Flujo principal": {
+      "1": "El actor ingresa un criterio de búsqueda (código o nombre).",
+      "2": "El sistema filtra y muestra las coincidencias.",
+      "3": "El actor selecciona al estudiante.",
+      "4": "El sistema despliega el expediente completo del estudiante."
+    },
+    "Postcondiciones": ["Se visualiza la información detallada del estudiante."]
+  }
+}
+@endjson

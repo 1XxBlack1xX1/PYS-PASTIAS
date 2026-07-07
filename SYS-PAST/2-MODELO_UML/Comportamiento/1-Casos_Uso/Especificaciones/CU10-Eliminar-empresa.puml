@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU10": {
+    "Caso de uso": "Eliminar empresa",
+    "Id": "CU-10",
+    "Breve descripción": "Permite dar de baja o eliminar de forma lógica una empresa del sistema.",
+    "Actores primarios": ["Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La empresa debe estar registrada y no tener convenios vigentes activos."],
+    "Flujo principal": {
+      "1": "El administrador selecciona la empresa a eliminar.",
+      "2": "El sistema solicita confirmación para la eliminación.",
+      "3": "El administrador confirma la acción.",
+      "4": "El sistema inhabilita o elimina el registro de la empresa."
+    },
+    "Postcondiciones": ["La empresa cambia a estado inactivo o es removida del sistema."]
+  }
+}
+@endjson

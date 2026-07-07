@@ -1,0 +1,24 @@
+@startjson
+{
+  "Caso de uso": "Seguimiento en múltiples sedes",
+  "Id": "CU-07",
+  "Breve descripción": "Permite monitorear el desarrollo de las pasantías de los estudiantes distribuidos en distintas sedes o sucursales.",
+  "Actores primarios": [
+    "Director"
+  ],
+  "Actores secundarios": [
+    "Base de Datos de Pasantías"
+  ],
+  "Precondiciones": [
+    "El estudiante debe tener una pasantía asignada e iniciada."
+  ],
+  "Flujo principal": {
+    "1": "El director selecciona el reporte de seguimiento.",
+    "2": "El sistema filtra la información por sede y sucursal.",
+    "3": "El sistema despliega el avance y asistencia de los pasantes por ubicación."
+  },
+  "Postcondiciones": [
+    "Se visualiza el estado consolidado de las pasantías multisede."
+  ]
+}
+@endjson

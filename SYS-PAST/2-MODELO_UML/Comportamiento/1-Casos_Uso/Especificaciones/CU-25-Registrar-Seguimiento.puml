@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU25": {
+    "Caso de uso": "Registrar seguimiento",
+    "Id": "CU-25",
+    "Breve descripción": "Permite asentar bitácoras, visitas o informes periódicos sobre el avance del pasante.",
+    "Actores primarios": ["Supervisor"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El supervisor debe tener asignado al alumno."],
+    "Flujo principal": {
+      "1": "El supervisor ingresa al registro de seguimiento del estudiante.",
+      "2": "El sistema presenta un formulario de evaluación periódica.",
+      "3": "El supervisor anota observaciones, horas acumuladas y conclusiones de la visita.",
+      "4": "El sistema guarda la ficha de seguimiento."
+    },
+    "Postcondiciones": ["Se añade una nueva bitácora de seguimiento al expediente de la pasantía."]
+  }
+}
+@endjson

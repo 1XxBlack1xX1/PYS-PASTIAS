@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU08": {
+    "Caso de uso": "Registrar empresa",
+    "Id": "CU-08",
+    "Breve descripción": "Permite registrar una nueva empresa u organización aliada en el sistema.",
+    "Actores primarios": ["Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El usuario autenticado debe tener permisos de gestión."],
+    "Flujo principal": {
+      "1": "El administrador selecciona la opción de registrar empresa.",
+      "2": "El sistema solicita los datos de la empresa (RUC, nombre, contacto, dirección).",
+      "3": "El administrador ingresa los datos y confirma el registro.",
+      "4": "El sistema valida los datos y almacena la información."
+    },
+    "Postcondiciones": ["La empresa queda registrada y habilitada en el sistema."]
+  }
+}
+@endjson

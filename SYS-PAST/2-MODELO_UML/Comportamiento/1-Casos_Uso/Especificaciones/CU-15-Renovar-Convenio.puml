@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU15": {
+    "Caso de uso": "Renovar convenio",
+    "Id": "CU-15",
+    "Breve descripción": "Permite extender el periodo de vigencia de un convenio próximo a vencer o vencido.",
+    "Actores primarios": ["Director"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El convenio debe estar registrado previamente."],
+    "Flujo principal": {
+      "1": "El director busca el convenio de la empresa específica.",
+      "2": "El sistema muestra la información del convenio actual.",
+      "3": "El director ingresa la nueva fecha de finalización y adjunta la adenda.",
+      "4": "El sistema actualiza el estado y vigencia del convenio."
+    },
+    "Postcondiciones": ["La vigencia del convenio es extendida."]
+  }
+}
+@endjson

@@ -1,0 +1,25 @@
+@startjson
+{
+  "Caso de uso": "Validación de vacantes por empresa",
+  "Id": "CU-06",
+  "Breve descripción": "El sistema verifica la disponibilidad de puestos ofrecidos por las empresas antes de permitir postulaciones.",
+  "Actores primarios": [
+    "Director",
+    "Estudiante"
+  ],
+  "Actores secundarios": [
+    "Base de Datos de Pasantías"
+  ],
+  "Precondiciones": [
+    "La empresa debe tener un convenio activo."
+  ],
+  "Flujo principal": {
+    "1": "El usuario consulta las vacantes de una empresa.",
+    "2": "El sistema verifica el límite de cupos en la base de datos.",
+    "3": "El sistema muestra las vacantes disponibles vigentes."
+  },
+  "Postcondiciones": [
+    "Se confirma la disponibilidad de plazas para el proceso de postulación."
+  ]
+}
+@endjson

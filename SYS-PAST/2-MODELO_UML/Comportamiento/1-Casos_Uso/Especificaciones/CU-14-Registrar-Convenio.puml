@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU14": {
+    "Caso de uso": "Registrar convenio",
+    "Id": "CU-14",
+    "Breve descripción": "Permite registrar un convenio institucional o marco entre la institución y una empresa.",
+    "Actores primarios": ["Director", "Administrador"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La empresa vinculada debe estar registrada en el sistema."],
+    "Flujo principal": {
+      "1": "El actor selecciona la opción de registrar nuevo convenio.",
+      "2": "El sistema solicita los detalles (fecha de inicio, fin, tipo de convenio, documento adjunto).",
+      "3": "El actor asocia la empresa y guarda los datos.",
+      "4": "El sistema almacena el convenio con estado 'Vigente'."
+    },
+    "Postcondiciones": ["El convenio queda registrado e inicia su vigencia."]
+  }
+}
+@endjson

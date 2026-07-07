@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU24": {
+    "Caso de uso": "Asignar supervisor",
+    "Id": "CU-24",
+    "Breve descripción": "Permite designar a un docente supervisor para que acompañe el desarrollo de la pasantía del alumno.",
+    "Actores primarios": ["Director"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["El estudiante debe tener una pasantía aprobada e iniciada."],
+    "Flujo principal": {
+      "1": "El director ve la lista de estudiantes sin supervisor asignado.",
+      "2": "El sistema muestra la lista de docentes disponibles.",
+      "3": "El director vincula un docente supervisor al estudiante.",
+      "4": "El sistema guarda la asignación y notifica a ambas partes."
+    },
+    "Postcondiciones": ["El estudiante cuenta con un supervisor asignado para su monitoreo."]
+  }
+}
+@endjson

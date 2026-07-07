@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU26": {
+    "Caso de uso": "Evaluar desempeño",
+    "Id": "CU-26",
+    "Breve descripción": "Permite calificar el rendimiento del estudiante al término de sus actividades prácticas.",
+    "Actores primarios": ["Empresa", "Supervisor"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La pasantía debe estar en su etapa final o concluida."],
+    "Flujo principal": {
+      "1": "El actor accede a la evaluación final del pasante.",
+      "2": "El sistema muestra los criterios de evaluación establecidos.",
+      "3": "El actor asigna puntajes, comentarios de desempeño y envía.",
+      "4": "El sistema calcula el promedio y archiva la calificación."
+    },
+    "Postcondiciones": ["El estudiante queda evaluado formalmente por sus actividades."]
+  }
+}
+@endjson

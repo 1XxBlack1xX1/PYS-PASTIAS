@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU11": {
+    "Caso de uso": "Registrar estudiante",
+    "Id": "CU-11",
+    "Breve descripción": "Permite dar de alta a un estudiante apto para realizar pasantías.",
+    "Actores primarios": ["Administrador"],
+    "Actores secundarios": ["Base de Datos", "Sistema Académico"],
+    "Precondiciones": ["El estudiante debe estar matriculado y cumplir con los requisitos académicos."],
+    "Flujo principal": {
+      "1": "El administrador solicita el registro de un nuevo estudiante.",
+      "2": "El sistema solicita o importa los datos personales y académicos.",
+      "3": "El administrador confirma la inserción.",
+      "4": "El sistema valida y guarda el registro del estudiante."
+    },
+    "Postcondiciones": ["El estudiante queda registrado y habilitada para postular."]
+  }
+}
+@endjson

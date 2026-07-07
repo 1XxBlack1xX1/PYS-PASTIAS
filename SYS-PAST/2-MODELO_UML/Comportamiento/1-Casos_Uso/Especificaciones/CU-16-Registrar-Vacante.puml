@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU16": {
+    "Caso de uso": "Registrar vacante",
+    "Id": "CU-16",
+    "Breve descripción": "Permite a una empresa crear una oferta de pasantía con requerimientos específicos.",
+    "Actores primarios": ["Empresa"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La empresa debe tener un convenio vigente activo."],
+    "Flujo principal": {
+      "1": "La empresa selecciona la opción de crear vacante.",
+      "2": "El sistema solicita título, descripción, funciones, requisitos y número de plazas.",
+      "3": "La empresa completa el formulario y lo envía.",
+      "4": "El sistema guarda la vacante en estado 'Pendiente de aprobación'."
+    },
+    "Postcondiciones": ["La vacante queda registrada a la espera de ser publicada."]
+  }
+}
+@endjson

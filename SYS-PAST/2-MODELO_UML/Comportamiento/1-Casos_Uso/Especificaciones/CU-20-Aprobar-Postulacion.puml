@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU20": {
+    "Caso de uso": "Aprobar postulación",
+    "Id": "CU-20",
+    "Breve descripción": "Permite aceptar la postulación de un estudiante para iniciar su pasantía.",
+    "Actores primarios": ["Empresa", "Director"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["Debe existir una postulación activa por parte del estudiante."],
+    "Flujo principal": {
+      "1": "La empresa evalúa al candidato y marca la opción 'Aprobar'.",
+      "2": "El sistema notifica al director para el visado final.",
+      "3": "El director valida el cumplimiento y aprueba.",
+      "4": "El sistema actualiza el estado de la postulación a 'Aprobada'."
+    },
+    "Postcondiciones": ["El estudiante es seleccionado formalmente para ocupar la vacante."]
+  }
+}
+@endjson

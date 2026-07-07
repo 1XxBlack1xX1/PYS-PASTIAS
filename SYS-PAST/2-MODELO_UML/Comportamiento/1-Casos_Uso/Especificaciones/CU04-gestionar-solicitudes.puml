@@ -1,0 +1,27 @@
+@startjson
+{
+  "Caso de uso": "Gestionar solicitudes de pasantías",
+  "Id": "CU-04",
+  "Breve descripción": "El sistema permite a los estudiantes registrar y gestionar sus solicitudes de pasantías.",
+  "Actores primarios": [
+    "Estudiante"
+  ],
+  "Actores secundarios": [
+    "Base de Datos de Pasantías"
+  ],
+  "Precondiciones": [
+    "El estudiante debe estar registrado y autenticado.",
+    "El perfil académico debe estar activo."
+  ],
+  "Flujo principal": {
+    "1": "El estudiante ingresa al módulo de pasantías.",
+    "2": "El sistema muestra las opciones de solicitud disponibles.",
+    "3": "El estudiante completa el formulario con los datos requeridos.",
+    "4": "El sistema valida los datos obligatorios.",
+    "5": "El sistema registra la solicitud con estado 'Pendiente'."
+  },
+  "Postcondiciones": [
+    "La solicitud de pasantía se almacena correctamente en el sistema."
+  ]
+}
+@endjson

@@ -1,0 +1,19 @@
+@startjson
+{
+  "CU28": {
+    "Caso de uso": "Cerrar proceso",
+    "Id": "CU-28",
+    "Breve descripción": "Permite dar por concluido de manera definitiva el ciclo de la pasantía de un estudiante.",
+    "Actores primarios": ["Director"],
+    "Actores secundarios": ["Base de Datos"],
+    "Precondiciones": ["La constancia debió ser emitida y todos los documentos archivados."],
+    "Flujo principal": {
+      "1": "El director busca el expediente del estudiante en fase final.",
+      "2": "El sistema muestra un checklist con todas las fases completas.",
+      "3": "El director presiona 'Cerrar Proceso'.",
+      "4": "El sistema cambia el estado del expediente a 'Archivado / Concluido'."
+    },
+    "Postcondiciones": ["El expediente pasa al archivo histórico del sistema, liberando al alumno del proceso activo."]
+  }
+}
+@endjson

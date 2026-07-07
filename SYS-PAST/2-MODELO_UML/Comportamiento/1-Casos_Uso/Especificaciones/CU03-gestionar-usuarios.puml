@@ -1,0 +1,28 @@
+@startjson
+{
+  "Caso de uso": "Gestionar usuarios y perfiles académicos",
+  "Id": "CU-03",
+  "Breve descripción": "Permite al administrador o director registrar y modificar los perfiles de los estudiantes de contabilidad y sus asesores.",
+  "Actores primarios": [
+    "Administrador",
+    "Director"
+  ],
+  "Actores secundarios": [
+    "Microservicio de Usuarios"
+  ],
+  "Precondiciones": [
+    "El usuario administrador debe estar autenticado.",
+    "Tener los datos académicos completos del estudiante."
+  ],
+  "Flujo principal": {
+    "1": "El director ingresa al módulo de gestión de usuarios.",
+    "2": "El sistema muestra la lista de estudiantes y asesores contables.",
+    "3": "El director selecciona crear o modificar un perfil académico.",
+    "4": "El sistema valida que no existan registros duplicados.",
+    "5": "El sistema guarda los cambios y actualiza los niveles de acceso."
+  },
+  "Postcondiciones": [
+    "Los perfiles y roles quedan actualizados en la base de datos."
+  ]
+}
+@endjson
