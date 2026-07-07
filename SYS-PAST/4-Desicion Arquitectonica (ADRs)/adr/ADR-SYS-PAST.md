@@ -1,40 +1,51 @@
-# ADR 001: Uso de Arquitectura Monolito para el Sistema de Administración de Pasantías
+# ADR 001: Uso de Arquitectura Monolítica Modular para el Sistema de Pasantías
 
-## Estado
-Aceptado
+## 📌 Estado
+**Aceptado**
 
-## Fecha
+---
+
+## 📅 Fecha
 2026-07-07
 
-## Contexto
-El **Sistema de Administración de Pasantías** requiere gestionar de manera altamente escalable y segura los ciclos de vida de las prácticas preprofesionales de los estudiantes. Esto involucra la interacción de múltiples actores con necesidades cambiantes: la institución académica (coordinadores y tutores), los estudiantes y las organizaciones/empresas externas. Debido a la naturaleza del sistema, se ha dividido en un ecosistema de **Microservicios** independientes (por ejemplo: Microservicio de Estudiantes, Microservicio de Empresas y Convenios, Microservicio de Evaluaciones y Reportes).
+---
 
-Sin embargo, las reglas académicas y los procesos de validación de las pasantías (cómputo de horas, aprobación de planes de trabajo, estados de convenios) son altamente propensos a cambiar según las normativas institucionales. Existía el riesgo de que estas reglas de negocio centrales se acoplaran directamente a la infraestructura tecnológica (como el framework Spring Boot, bases de datos relacionales para expedientes o NoSQL para bitácoras, y protocolos de comunicación como REST o sistemas de mensajería para notificaciones). Si la tecnología de persistencia cambiaba o se requería probar las reglas de aprobación sin depender de una base de datos activa, el acoplamiento haría que la evolución del sistema fuera costosa y compleja.
+## 📖 Contexto
+La Escuela de Administración requiere un sistema centralizado para gestionar el ciclo de vida de las pasantías de los estudiantes (postulaciones, convenios con empresas, asignación de tutores académicos y evaluaciones).
 
-Se evaluó la estructura interna de los microservicios bajo dos enfoques:
-1. **Diseño tradicional en capas:** Desarrollo rápido, pero con un alto riesgo de mezclar la lógica de validación académica de pasantías con anotaciones del framework o consultas directas a la base de datos.
-2. **Diseño de Arquitectura Hexagonal (Puertos y Adaptadores):** Desacoplamiento total del núcleo del negocio de las pasantías, permitiendo que las reglas de asignación, evaluación y control cambien de forma independiente a los mecanismos de almacenamiento o interfaces de usuario.
+Al analizar los requerimientos, se identificó que el sistema debe ser desarrollado e implementado de forma rápida, con costos de infraestructura controlados y por un equipo de desarrollo unificado. Además, los módulos del sistema (estudiantes, empresas y evaluaciones) requieren compartir datos constantemente de forma síncrona y con una fuerte consistencia transaccional (por ejemplo, no se puede evaluar a un estudiante si su convenio de pasantía no está aprobado en la base de datos).
 
-## Decisión
-Hemos decidido adoptar la **Arquitectura Hexagonal** de manera estricta para el diseño interno de **cada microservicio del Sistema de Administración de Pasantías**.
+Se evaluaron dos enfoques macro estructurales para el sistema:
 
-La estructura interna de cada componente se dividirá de la siguiente manera:
-* **Dominio / Core (Gestión de Pasantías):** Contiene la lógica pura del negocio académico. Incluye las entidades principales (`Estudiante`, `Pasantia`, `Empresa`, `Tutor`, `Evaluacion`) y las reglas comerciales (validación de horas mínimas, verificación de vigencia de convenios, estados de aprobación de informes), totalmente aisladas de frameworks, librerías web o de persistencia.
-* **Puertos (Ports):** Interfaces que definen los contratos del sistema. Los puertos de entrada (*Inbound/Driving*) exponen los casos de uso específicos del negocio (ej. `PostularAPasantia`, `EvaluarDesempeño`, `GenerarReporteFinal`). Los puertos de salida (*Outbound/Driven*) definen los contratos necesarios para la persistencia o integraciones (ej. `PasantiaRepositoryPort`, `NotificacionServicePort`).
-* **Adaptadores (Adapters):** Implementaciones técnicas externas. 
-  * Los adaptadores de entrada (*Driving*) exponen las API REST para los portales web del estudiante y la empresa, o controladores de eventos para la recepción de solicitudes.
-  * Los adaptadores de salida (*Driven*) gestionan el acceso a las bases de datos (ej. mediante Spring Data JPA para PostgreSQL o MongoDB), el almacenamiento de archivos (ej. cartas de aceptación en PDFs) y las llamadas HTTP o colas de mensajería para notificar a los usuarios.
+1. **Arquitectura de Microservicios:** Ofrece alta autonomía de despliegue, pero introduce una gran complejidad en la red, gestión de bases de datos duplicadas y costos elevados de infraestructura que la Escuela no requiere en este momento.
+2. **Arquitectura Monolítica Modular:** Concentra toda la aplicación en una única base de código y un solo despliegue, pero organizando el código internamente por "módulos" claros según el negocio de la Escuela de Administración, evitando que se transforme en un sistema desordenado.
 
-## Consecuencias
+---
 
-### Positivas (Beneficios)
-* **Aislamiento de la Lógica Académica:** Los cambios en los reglamentos internos de pasantías de la institución se pueden implementar modificando únicamente el Dominio, sin alterar los controladores web ni la base de datos.
-* **Flexibilidad Tecnológica y Multi-inquilino:** Permite migrar o diversificar el almacenamiento (por ejemplo, guardar los documentos firmados en una nube o localmente) cambiando solo un adaptador de salida, manteniendo intacto el flujo de aprobación del sistema.
-* **Facilidad de Pruebas Automatizadas (Mocks):** Facilita la realización de pruebas unitarias robustas sobre los flujos críticos (como el cálculo correcto de horas acumuladas por el alumno) simulando el comportamiento de las bases de datos o servicios de autenticación mediante los puertos.
-* **Autonomía de los Microservicios:** Cada módulo del flujo de la pasantía (Postulación, Seguimiento, Certificación) evoluciona a su propio ritmo técnico.
+## 🎯 Decisión
+Hemos decidido adoptar una **Arquitectura Monolítica Modular** para el diseño e implementación del Sistema de Pasantías.
 
-### Negativas (Compensaciones / Trade-offs)
-* **Duplicidad de Modelos e Incremento de Mapeadores:** Al separar estrictamente las capas, es obligatorio transformar los datos constantemente: de los DTOs de la API REST a Objetos de Dominio (`Pasantia`), y de estos a Entidades de base de datos (`PasantiaEntity`). Esto añade código repetitivo (*boilerplate*) y requiere el uso de librerías de mapeo (como MapStruct).
-* **Curva de Aprendizaje y Mayor Número de Archivos:** El equipo de desarrollo debe adaptarse a trabajar con una estructura de paquetes rigurosa por cada microservicio. Una funcionalidad simple requiere la creación de interfaces (puertos), implementaciones (adaptadores) y modelos separados, aumentando el tiempo inicial de desarrollo.
+Toda la aplicación se empaquetará, compilará y desplegará como una única unidad funcional (un solo archivo ejecutable o contenedor), compartiendo una única base de datos relacional centralizada.
 
-esto cambialo todo a monolito, todo lo que diga microservicios cambialo a monolito porque estamos trabajando con monolito y no microservicios
+Para mantener el orden y evitar el "código espagueti", la estructura interna del monolito se organizará estrictamente bajo un esquema de **Capas Tradicionales por Módulo**:
+
+* **Capa de Presentación / Interfaz de Usuario:** Controladores web, vistas (Thymeleaf/vistas del framework) y APIs para los estudiantes, empresas y personal administrativo de la escuela.
+* **Capa de Lógica de Negocio (Servicios):** Contiene las reglas académicas de la Escuela de Administración (validación de créditos del pasante, flujos de aprobación de convenios y cálculo de notas de evaluación).
+* **Capa de Acceso a Datos (Persistencia/DAO):** Mapeo de las entidades y consultas directas a la base de datos unificada del sistema.
+
+La comunicación entre los diferentes módulos del negocio (como el módulo de Alumnos y el módulo de Pasantías) se realizará directamente en memoria a través de llamadas de código locales (invocación de métodos entre servicios), garantizando transacciones seguras y rápidas.
+
+---
+
+## ⚡ Consecuencias
+
+### 👍 Positivas (Beneficios)
+* **Despliegue y Operación Simplificados:** Al ser un único monolito, el proceso de despliegue (CI/CD) es sumamente sencillo. Solo se configura un servidor web y una única base de datos, reduciendo drásticamente los costos operativos para la institución.
+* **Consistencia de Datos Inmediata:** Facilita la gestión de transacciones lógicas (ACID). Si la inscripción de una pasantía falla, se puede hacer un rollback automático de todo el proceso en la base de datos de forma nativa.
+* **Desarrollo Inicial Veloz:** El equipo de desarrollo puede trabajar sobre un único proyecto, compartiendo librerías y componentes comunes sin la necesidad de gestionar APIs complejas de red o protocolos de mensajería asíncrona.
+* **Refactorización Sencilla:** Modificar flujos que involucren a estudiantes y empresas es fácil y rápido a nivel de código, ya que todo el sistema reside en el mismo espacio de trabajo.
+
+### 👎 Negativas (Desventajas / Riesgos)
+* **Acoplamiento Potencial:** Al compartir la misma base de datos y proyecto, existe el riesgo de que los desarrolladores rompan las barreras de los módulos y creen dependencias circulares si no se supervisa el diseño del código.
+* **Escalabilidad Unificada:** Si solo el módulo de "Postulaciones" recibe un tráfico masivo en una semana específica del año, se debe escalar e incrementar los recursos de todo el monolito completo, no solo de esa funcionalidad.
+* **Punto Único de Fallo:** Si un error crítico (como una fuga de memoria en el módulo de reportes de administración) tira abajo la aplicación, todo el sistema de pasantías (incluyendo el acceso de alumnos y empresas) dejará de funcionar simultáneamente.
