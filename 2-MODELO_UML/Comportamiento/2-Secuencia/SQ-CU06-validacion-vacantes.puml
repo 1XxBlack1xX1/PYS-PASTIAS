@@ -1,0 +1,19 @@
+@startuml CU06_Validacion_Vacantes
+autonumber
+actor "Coordinador / Director" as Actor
+participant "App Web" as UI
+participant "VacanteController" as Ctrl
+participant "VacanteService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Revisa vacantes pendientes de validación
+UI -> Ctrl: validarVacante(idVacante, esValida)
+Ctrl -> Serv: procesarValidacion(idVacante, esValida)
+activate Serv
+Serv -> DB: UPDATE vacantes SET validada = esValida WHERE id = idVacante
+DB --> Serv: ok
+Ctrl <-- Serv: resultadoValidacion
+deactivate Serv
+UI <-- Ctrl: actualizarVistaVacantes()
+Actor <-- UI: Muestra "Vacante validada exitosamente"
+@enduml

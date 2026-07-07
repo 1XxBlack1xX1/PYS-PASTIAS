@@ -1,0 +1,20 @@
+@startuml CU26_Evaluar_Desempeño
+autonumber
+actor "Supervisor / Jefe Empresa" as Actor
+participant "App Web" as UI
+participant "EvaluacionController" as Ctrl
+participant "EvaluacionService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Llena la ficha de evaluación de desempeño con puntajes y criterios
+UI -> Ctrl: registrarEvaluacion(idEstudiante, criteriosPuntaje)
+Ctrl -> Serv: procesarEvaluacionDesempeno(idEstudiante, criteriosPuntaje)
+activate Serv
+Serv -> Serv: calcularNotaFinal(criteriosPuntaje)
+Serv -> DB: INSERT INTO evaluaciones(id_estudiante, nota_final, detalles) VALUES(...)
+DB --> Serv: ok
+Ctrl <-- Serv: evaluacionProcesada
+deactivate Serv
+UI <-- Ctrl: mostrarResultadosEvaluacion()
+Actor <-- UI: Muestra "Evaluación de desempeño enviada y guardada"
+@enduml

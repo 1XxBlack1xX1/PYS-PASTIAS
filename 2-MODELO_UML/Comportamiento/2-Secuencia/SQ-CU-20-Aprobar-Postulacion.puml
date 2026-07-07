@@ -1,0 +1,21 @@
+@startuml CU20_Aprobar_Postulacion
+autonumber
+actor "Empresa / Coordinador" as Actor
+participant "App Web" as UI
+participant "PostulacionController" as Ctrl
+participant "PostulacionService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona postulación y hace clic en "Aprobar"
+UI -> Ctrl: aprobarPostulacion(idPostulacion)
+Ctrl -> Serv: aceptarPostulacionEstudiante(idPostulacion)
+activate Serv
+Serv -> DB: UPDATE postulaciones SET estado = 'APROBADA' WHERE id = idPostulacion
+DB --> Serv: ok
+Serv -> DB: UPDATE vacantes SET estado = 'CUBIERTA' WHERE id = (SELECT id_vacante FROM postulaciones WHERE id = idPostulacion)
+DB --> Serv: ok
+Ctrl <-- Serv: postulacionAprobada
+deactivate Serv
+UI <-- Ctrl: notificarCambioEstado()
+Actor <-- UI: Muestra "Postulación aprobada con éxito"
+@enduml

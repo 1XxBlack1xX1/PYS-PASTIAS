@@ -1,0 +1,19 @@
+@startuml CU23_Consultar_Historial
+autonumber
+actor "Usuario Sistema" as Actor
+participant "App Web" as UI
+participant "HistorialController" as Ctrl
+participant "HistorialService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Solicita ver historial de actividades del sistema
+UI -> Ctrl: obtenerHistorial(filtros)
+Ctrl -> Serv: buscarLogsSistema(filtros)
+activate Serv
+Serv -> DB: SELECT * FROM auditoria WHERE ... ORDER BY fecha DESC
+DB --> Serv: lista_logs
+Ctrl <-- Serv: lista_logs
+deactivate Serv
+UI <-- Ctrl: renderizarHistorial(lista_logs)
+Actor <-- UI: Muestra la bitácora o historial en pantalla
+@enduml

@@ -1,0 +1,19 @@
+@startuml CU24_Asignar_Supervisor
+autonumber
+actor "Coordinador" as Actor
+participant "App Web" as UI
+participant "AsignacionController" as Ctrl
+participant "SupervisorService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona un estudiante y le asigna un docente supervisor
+UI -> Ctrl: asignarSupervisor(idEstudiante, idDocente)
+Ctrl -> Serv: vincularSupervisor(idEstudiante, idDocente)
+activate Serv
+Serv -> DB: INSERT INTO supervisiones(id_estudiante, id_docente, fecha_asignacion) VALUES(...)
+DB --> Serv: ok
+Ctrl <-- Serv: asignacionRealizada
+deactivate Serv
+UI <-- Ctrl: refrescarDetallesAsignacion()
+Actor <-- UI: Muestra "Supervisor asignado correctamente al estudiante"
+@enduml

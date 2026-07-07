@@ -1,0 +1,33 @@
+@startuml CU22_Generar_Reportes
+autonumber
+actor "Director / Secretaria" as Actor
+participant "App Web" as UI
+participant "ReporteController" as Ctrl
+participant "ReporteService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona periodo y filtros de reportes
+UI -> Ctrl: generarReporte(periodo, filtros)
+Ctrl -> Serv: calcularReporte(periodo, filtros)
+activate Serv
+Serv -> DB: obtenerPagos(periodo, filtros)
+DB --> Serv: Lista de pagos registrados
+Serv -> DB: obtenerDeudores(periodo, filtros)
+DB --> Serv: Lista de estudiantes deudores
+Serv -> Serv: calcularTotales(pagos)
+Ctrl <-- Serv: retornaReporte(totales, deudores)
+deactivate Serv
+UI <-- Ctrl: mostrarReporte(totales, deudores)
+Actor <-- UI: Muestra reporte consolidado
+
+opt Usuario solicita exportar
+    Actor -> UI: Presiona "Exportar"
+    UI -> Ctrl: exportarReporte(formato)
+    Ctrl -> Serv: generarArchivo(formato, datos)
+    activate Serv
+    Serv --> Ctrl: archivoGenerado
+    deactivate Serv
+    Ctrl --> UI: descargarArchivo(archivo)
+    UI --> Actor: Muestra "Reporte exportado exitosamente"
+end
+@enduml

@@ -1,0 +1,19 @@
+@startuml CU04_Gestionar_Solicitudes
+autonumber
+actor "Coordinador" as Actor
+participant "App Web" as UI
+participant "SolicitudController" as Ctrl
+participant "SolicitudService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona una solicitud para revisión
+UI -> Ctrl: actualizarEstadoSolicitud(id, nuevoEstado)
+Ctrl -> Serv: cambiarEstado(id, nuevoEstado)
+activate Serv
+Serv -> DB: UPDATE solicitudes SET estado = nuevoEstado WHERE id = id
+DB --> Serv: ok
+Ctrl <-- Serv: solicitudActualizada
+deactivate Serv
+UI <-- Ctrl: refrescarListaSolicitudes()
+Actor <-- UI: Muestra "Estado de solicitud actualizado"
+@enduml

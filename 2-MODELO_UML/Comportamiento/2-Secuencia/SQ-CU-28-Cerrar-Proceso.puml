@@ -1,0 +1,19 @@
+@startuml CU28_Cerrar_Proceso
+autonumber
+actor "Coordinador / Director" as Actor
+participant "App Web" as UI
+participant "ProcesoController" as Ctrl
+participant "ProcesoService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona el expediente completo del estudiante y hace clic en "Cerrar Proceso"
+UI -> Ctrl: cerrarProcesoPracticas(idEstudiante)
+Ctrl -> Serv: archivarProcesoEstudiante(idEstudiante)
+activate Serv
+Serv -> DB: UPDATE expedientes SET estado = 'FINALIZADO_CONCLUIDO' WHERE id_estudiante = idEstudiante
+DB --> Serv: ok
+Ctrl <-- Serv: procesoCerradoExitosamente
+deactivate Serv
+UI <-- Ctrl: deshabilitarEdicionExpediente()
+Actor <-- UI: Muestra "Proceso cerrado formalmente. Expediente archivado"
+@enduml

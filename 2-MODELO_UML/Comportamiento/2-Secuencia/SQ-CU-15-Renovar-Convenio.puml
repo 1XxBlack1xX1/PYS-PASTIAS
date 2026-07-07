@@ -1,0 +1,19 @@
+@startuml CU15_Renovar_Convenio
+autonumber
+actor "Director" as Actor
+participant "App Web" as UI
+participant "ConvenioController" as Ctrl
+participant "ConvenioService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Selecciona convenio vencido y especifica nueva fecha de fin
+UI -> Ctrl: renovarConvenio(idConvenio, nuevaFechaFin)
+Ctrl -> Serv: extenderVigenciaConvenio(idConvenio, nuevaFechaFin)
+activate Serv
+Serv -> DB: UPDATE convenios SET fecha_fin = nuevaFechaFin, estado = 'RENOVADO' WHERE id = idConvenio
+DB --> Serv: ok
+Ctrl <-- Serv: renovacionExitosa
+deactivate Serv
+UI <-- Ctrl: refrescarDetalleConvenio()
+Actor <-- UI: Muestra "Convenio renovado exitosamente"
+@enduml

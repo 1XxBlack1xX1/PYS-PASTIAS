@@ -1,0 +1,19 @@
+@startuml CU14_Registrar_Convenio
+autonumber
+actor "Director / Oficina Convenios" as Actor
+participant "App Web" as UI
+participant "ConvenioController" as Ctrl
+participant "ConvenioService" as Serv
+database "BaseDatos" as DB
+
+Actor -> UI: Rellena los términos de un nuevo convenio institucional
+UI -> Ctrl: crearConvenio(datosConvenio)
+Ctrl -> Serv: procesarNuevoConvenio(datosConvenio)
+activate Serv
+Serv -> DB: INSERT INTO convenios(institucion, fecha_inicio, fecha_fin, estado) VALUES(...)
+DB --> Serv: convenio_creado
+Ctrl <-- Serv: convenioGuardado
+deactivate Serv
+UI <-- Ctrl: mostrarConvenioRegistrado()
+Actor <-- UI: Muestra "Convenio registrado y activo"
+@enduml
