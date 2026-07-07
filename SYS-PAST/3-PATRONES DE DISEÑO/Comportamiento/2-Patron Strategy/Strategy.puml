@@ -1,38 +1,30 @@
-@startuml
-title Patrón Strategy - SYS COLEGIO EMANUEL
+@startuml Patron_Strategy_Exportacion
 
-interface EstrategiaNotificacion {
-    + enviar(destinatario: String, mensaje: String): void
+interface ExportarStrategy {
+    +exportar(String datosReporte)
 }
 
-class NotificacionPush {
-    + enviar(destinatario: String, mensaje: String): void
+class ExportarPDFStrategy {
+    +exportar(String datosReporte)
 }
 
-class NotificacionSMS {
-    + enviar(destinatario: String, mensaje: String): void
+class ExportarExcelStrategy {
+    +exportar(String datosReporte)
 }
 
-class NotificacionEmail {
-    + enviar(destinatario: String, mensaje: String): void
+class ExportarCSVStrategy {
+    +exportar(String datosReporte)
 }
 
-class GestorComunicados {
-    - estrategia: EstrategiaNotificacion
-    + setEstrategia(estrategia: EstrategiaNotificacion): void
-    + enviarComunicado(destinatario: String, mensaje: String): void
+class ReporteExportadorContext {
+    - ExportarStrategy strategy
+    + setStrategy(ExportarStrategy strategy)
+    + ejecutarExportacion(String datos)
 }
 
-EstrategiaNotificacion <|.. NotificacionPush : implementa
-EstrategiaNotificacion <|.. NotificacionSMS : implementa
-EstrategiaNotificacion <|.. NotificacionEmail : implementa
-GestorComunicados --> EstrategiaNotificacion : usa
-
-note bottom of GestorComunicados
-  El Director o Secretaria puede elegir
-  en tiempo de ejecución cómo enviar
-  los comunicados: Push, SMS o Email,
-  sin cambiar el código del gestor.
-end note
+ExportarStrategy <|.. ExportarPDFStrategy
+ExportarStrategy <|.. ExportarExcelStrategy
+ExportarStrategy <|.. ExportarCSVStrategy
+ReporteExportadorContext --> ExportarStrategy : usa
 
 @enduml

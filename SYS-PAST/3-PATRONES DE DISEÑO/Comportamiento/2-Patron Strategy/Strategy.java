@@ -1,66 +1,45 @@
-package com.syscolegio.patrones.comportamiento.strategy;
-
-// ====== INTERFAZ ESTRATEGIA ======
-interface EstrategiaNotificacion {
-    void enviar(String destinatario, String mensaje);
+// Interfaz Estrategia
+interface ExportarStrategy {
+    void exportar(String datosReporte);
 }
 
-// ====== ESTRATEGIAS CONCRETAS ======
-class NotificacionPush implements EstrategiaNotificacion {
+// Estrategia Concreta: PDF
+class ExportarPDFStrategy implements ExportarStrategy {
     @Override
-    public void enviar(String destinatario, String mensaje) {
-        System.out.println("[PUSH] -> " + destinatario + ": " + mensaje);
+    public void exportar(String datosReporte) {
+        System.out.println("Generando documento PDF oficial con diseño vectorial y firmas...");
+        System.out.println("Datos procesados en PDF: " + datosReporte);
     }
 }
 
-class NotificacionSMS implements EstrategiaNotificacion {
+// Estrategia Concreta: Excel
+class ExportarExcelStrategy implements ExportarStrategy {
     @Override
-    public void enviar(String destinatario, String mensaje) {
-        System.out.println("[SMS] -> " + destinatario + ": " + mensaje);
+    public void exportar(String datosReporte) {
+        System.out.println("Escribiendo libro de celdas en formato XLSX con fórmulas de sumatoria contable...");
     }
 }
 
-class NotificacionEmail implements EstrategiaNotificacion {
+// Estrategia Concreta: CSV
+class ExportarCSVStrategy implements ExportarStrategy {
     @Override
-    public void enviar(String destinatario, String mensaje) {
-        System.out.println("[EMAIL] -> " + destinatario + ": " + mensaje);
+    public void exportar(String datosReporte) {
+        System.out.println("Estructurando strings separados por comas (CSV) de texto plano plano...");
     }
 }
 
-// ====== CONTEXTO ======
-class GestorComunicados {
-    private EstrategiaNotificacion estrategia;
+// Contexto que utiliza las estrategias de manera dinámica
+class ReporteExportadorContext {
+    private ExportarStrategy strategy;
 
-    public void setEstrategia(EstrategiaNotificacion estrategia) {
-        this.estrategia = estrategia;
+    public void setStrategy(ExportarStrategy strategy) {
+        this.strategy = strategy;
     }
 
-    public void enviarComunicado(String destinatario, String mensaje) {
-        if (estrategia == null) {
-            System.out.println("No hay estrategia definida.");
-            return;
+    public void ejecutarExportacion(String datos) {
+        if (strategy == null) {
+            throw new IllegalStateException("No se ha definido una estrategia de exportación.");
         }
-        estrategia.enviar(destinatario, mensaje);
-    }
-}
-
-// ====== MAIN ======
-public class Strategy {
-    public static void main(String[] args) {
-        System.out.println("====== PATRÓN STRATEGY - SYS COLEGIO EMANUEL ======");
-
-        GestorComunicados gestor = new GestorComunicados();
-
-        System.out.println("\n--- Enviando por PUSH ---");
-        gestor.setEstrategia(new NotificacionPush());
-        gestor.enviarComunicado("Padres 3ro B", "Reunión mañana a las 9am");
-
-        System.out.println("\n--- Enviando por SMS ---");
-        gestor.setEstrategia(new NotificacionSMS());
-        gestor.enviarComunicado("Sr. Juan Pérez", "Su hijo llegó tarde hoy");
-
-        System.out.println("\n--- Enviando por EMAIL ---");
-        gestor.setEstrategia(new NotificacionEmail());
-        gestor.enviarComunicado("docente@colegio.pe", "Notas del periodo T1 pendientes");
+        strategy.exportar(datos);
     }
 }
